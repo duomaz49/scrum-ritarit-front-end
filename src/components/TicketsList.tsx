@@ -4,10 +4,10 @@ import SearchBar from "./SearchBar.tsx";
 import {useEffect, useState} from "react";
 import GenericModal from "./GenericModal.tsx";
 import axios, {AxiosRequestConfig} from "axios";
-import {BASE_URL_LOCALHOST, ENDPOINTS} from '../utils/constants';
+import {BASE_URL, ENDPOINTS} from '../utils/constants';
 import {getBasicAuthHeader} from "../utils/utils";
 
-const apiUrlTickets = `${BASE_URL_LOCALHOST}${ENDPOINTS.TICKETS}`;
+const apiUrlTickets = `${BASE_URL}${ENDPOINTS.TICKETS}`;
 const username = 'john_doe';
 const password = 'password123';
 
