@@ -6,6 +6,7 @@ Fron-end for Scrum-ritarit project.
 
 1. Clone the repository
 2. Start from terminal with: npm run dev
+3. Make sure port 8080 is free, since vite will run the project on that port
 
 ### Technologies used
 1. React
