@@ -46,13 +46,17 @@ export default function TicketsList() {
         );
     };
 
-    const toggleTicketConfirmModalAndSetTicketId = (ticketId: number) => {
-        setSelectedTicketId(ticketId);
+    const toggleTicketConfirmModal = (ticketId?: number) => {
+        if (ticketId) {
+            setSelectedTicketId(ticketId);
+        }
         setIsTicketConfirmModalOpen(!isTicketConfirmationModalOpen);
     }
 
-    const toggleTicketUndoModalAndSetTicketId = (ticketId: number) => {
-        setSelectedTicketId(ticketId);
+    const toggleTicketUndoModal = (ticketId?: number) => {
+        if (ticketId) {
+            setSelectedTicketId(ticketId);
+        }
         setIsTicketUndoModalOpen(!isTicketUndoModalOpen);
     }
 
@@ -111,7 +115,7 @@ export default function TicketsList() {
                             <ListGroup style={{ maxHeight: '300px', overflowY: 'auto', paddingRight: '10px' }}>
                                 {filterBySearch(unUsedTickets).map((ticket, index) => (
                                     <Button key={index} color="success" outline className="w-100 text-left mb-2"
-                                            onClick={() => toggleTicketConfirmModalAndSetTicketId(ticket.ticketId)}>
+                                            onClick={() => toggleTicketConfirmModal(ticket.ticketId)}>
                                         {ticket?.ticketNumber}
                                     </Button>
                                 ))}
@@ -126,7 +130,7 @@ export default function TicketsList() {
                             <ListGroup style={{ maxHeight: '300px', overflowY: 'auto', paddingRight: '10px' }}>
                                 {filterBySearch(usedTickets).map((ticket, index) => (
                                     <Button key={index} color="warning" outline className="w-100 text-left mb-2"
-                                            onClick={() => toggleTicketUndoModalAndSetTicketId(ticket.ticketId)}>
+                                            onClick={() => toggleTicketUndoModal(ticket.ticketId)}>
                                         {ticket?.ticketNumber}
                                     </Button>
                                 ))}
@@ -137,7 +141,7 @@ export default function TicketsList() {
             </Row>
             <GenericModal
                 isModalOpen={isTicketConfirmationModalOpen}
-                toggleModal={() => setIsTicketConfirmModalOpen(!isTicketConfirmationModalOpen)}
+                toggleModal={toggleTicketConfirmModal}
                 title="Confirm ticket usage"
                 message="Are you sure you want to mark this ticket as used?"
                 confirmText="Yes"
@@ -146,7 +150,7 @@ export default function TicketsList() {
             />
             <GenericModal
                 isModalOpen={isTicketUndoModalOpen}
-                toggleModal={() => setIsTicketUndoModalOpen(!isTicketUndoModalOpen)}
+                toggleModal={toggleTicketUndoModal}
                 title="Undo ticket usage"
                 message="Are you sure you want to undo the ticket, it will be usable again!"
                 confirmText="Yes"
