@@ -1,11 +1,11 @@
-import {ITicket} from '../types/ticket.ts'
-import {Container, Row, Col, Card, CardBody, Button, ListGroup, ListGroupItem} from 'reactstrap';
+import { ITicket } from '../types/ticket.ts';
+import { Container, Row, Col, Card, CardBody, Button, ListGroup } from 'reactstrap';
 import SearchBar from "./SearchBar.tsx";
-import {useEffect, useState} from "react";
+import { useEffect, useState } from "react";
 import GenericModal from "./GenericModal.tsx";
-import axios, {AxiosRequestConfig} from "axios";
-import {BASE_URL, ENDPOINTS} from '../utils/constants';
-import {getBasicAuthHeader} from "../utils/utils";
+import axios, { AxiosRequestConfig } from "axios";
+import { BASE_URL, ENDPOINTS } from '../utils/constants';
+import { getBasicAuthHeader } from "../utils/utils";
 
 const apiUrlTickets = `${BASE_URL}${ENDPOINTS.TICKETS}`;
 const username = 'john_doe';
@@ -15,9 +15,10 @@ export default function TicketsList() {
     const [searchQuery, setSearchQuery] = useState<string>('');
     const [tickets, setTickets] = useState<ITicket[]>([]);
     const [isTicketConfirmationModalOpen, setIsTicketConfirmModalOpen] = useState<boolean>(false);
+    const [isTicketUndoModalOpen, setIsTicketUndoModalOpen] = useState<boolean>(false);
     const [selectedTicketId, setSelectedTicketId] = useState<number | null>(null);
-    const unUsedTickets = tickets.filter(ticket => !ticket.used)
-    const usedTickets = tickets.filter(ticket => ticket.used)
+    const unUsedTickets = tickets.filter(ticket => !ticket.used);
+    const usedTickets = tickets.filter(ticket => ticket.used);
 
     useEffect(() => {
         getTickets();
@@ -45,9 +46,14 @@ export default function TicketsList() {
         );
     };
 
-    const toggleTicketConfirmModal = (ticketId: number | null = null) => {
+    const toggleTicketConfirmModalAndSetTicketId = (ticketId: number) => {
         setSelectedTicketId(ticketId);
         setIsTicketConfirmModalOpen(!isTicketConfirmationModalOpen);
+    }
+
+    const toggleTicketUndoModalAndSetTicketId = (ticketId: number) => {
+        setSelectedTicketId(ticketId);
+        setIsTicketUndoModalOpen(!isTicketUndoModalOpen);
     }
 
     const markTicketUsed = () => {
@@ -63,10 +69,30 @@ export default function TicketsList() {
         axios.put(`${apiUrlTickets}/id/${selectedTicketId}/use`, {}, config)
             .then(response => {
                 getTickets();
-                toggleTicketConfirmModal();
+                setIsTicketConfirmModalOpen(false);
             })
             .catch(error => {
                 console.error("Error marking ticket as used:", error);
+            });
+    };
+
+    const markTicketUnused = () => {
+        if (!selectedTicketId) {
+            alert("Ticket ID is missing");
+            return;
+        }
+        const config: AxiosRequestConfig = {
+            headers: {
+                'Authorization': getBasicAuthHeader(username, password),
+            }
+        };
+        axios.put(`${apiUrlTickets}/id/${selectedTicketId}/use?used=false`, {}, config)
+            .then(response => {
+                getTickets();
+                setIsTicketUndoModalOpen(false);
+            })
+            .catch(error => {
+                console.error("Error undoing ticket usage:", error);
             });
     };
 
@@ -74,7 +100,7 @@ export default function TicketsList() {
         <Container>
             <Card className="w-100 card-no-border">
                 <CardBody className="text-start">
-                    <SearchBar onSearch={setSearchQuery}/>
+                    <SearchBar onSearch={setSearchQuery} />
                 </CardBody>
             </Card>
             <Row className="mt-4 d-flex">
@@ -82,10 +108,10 @@ export default function TicketsList() {
                     <Card className="w-100 card-no-border">
                         <CardBody className="text-start">
                             <h3 className="mt-4 mb-4">Available tickets:</h3>
-                            <ListGroup>
+                            <ListGroup style={{ maxHeight: '300px', overflowY: 'auto', paddingRight: '10px' }}>
                                 {filterBySearch(unUsedTickets).map((ticket, index) => (
                                     <Button key={index} color="success" outline className="w-100 text-left mb-2"
-                                            onClick={() => toggleTicketConfirmModal(ticket.ticketId)}>
+                                            onClick={() => toggleTicketConfirmModalAndSetTicketId(ticket.ticketId)}>
                                         {ticket?.ticketNumber}
                                     </Button>
                                 ))}
@@ -97,11 +123,12 @@ export default function TicketsList() {
                     <Card className="w-100 card-no-border">
                         <CardBody className="text-start">
                             <h3 className="mt-4 mb-4">Used tickets:</h3>
-                            <ListGroup>
+                            <ListGroup style={{ maxHeight: '300px', overflowY: 'auto', paddingRight: '10px' }}>
                                 {filterBySearch(usedTickets).map((ticket, index) => (
-                                    <ListGroupItem key={index}>
-                                        {ticket?.ticketNumber} (used)
-                                    </ListGroupItem>
+                                    <Button key={index} color="warning" outline className="w-100 text-left mb-2"
+                                            onClick={() => toggleTicketUndoModalAndSetTicketId(ticket.ticketId)}>
+                                        {ticket?.ticketNumber}
+                                    </Button>
                                 ))}
                             </ListGroup>
                         </CardBody>
@@ -110,12 +137,21 @@ export default function TicketsList() {
             </Row>
             <GenericModal
                 isModalOpen={isTicketConfirmationModalOpen}
-                toggleModal={toggleTicketConfirmModal}
+                toggleModal={() => setIsTicketConfirmModalOpen(!isTicketConfirmationModalOpen)}
                 title="Confirm ticket usage"
-                message="Are you sure you want to mark ticket as used?"
+                message="Are you sure you want to mark this ticket as used?"
                 confirmText="Yes"
                 cancelText="No"
                 onConfirm={markTicketUsed}
+            />
+            <GenericModal
+                isModalOpen={isTicketUndoModalOpen}
+                toggleModal={() => setIsTicketUndoModalOpen(!isTicketUndoModalOpen)}
+                title="Undo ticket usage"
+                message="Are you sure you want to undo the ticket, it will be usable again!"
+                confirmText="Yes"
+                cancelText="No"
+                onConfirm={markTicketUnused}
             />
         </Container>
     );
