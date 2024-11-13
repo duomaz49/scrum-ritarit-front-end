@@ -71,7 +71,7 @@ export default function TicketsList() {
             }
         };
         axios.put(`${apiUrlTickets}/id/${selectedTicketId}/use`, {}, config)
-            .then(response => {
+            .then(() => {
                 getTickets();
                 setIsTicketConfirmModalOpen(false);
             })
@@ -91,7 +91,7 @@ export default function TicketsList() {
             }
         };
         axios.put(`${apiUrlTickets}/id/${selectedTicketId}/use?used=false`, {}, config)
-            .then(response => {
+            .then(() => {
                 getTickets();
                 setIsTicketUndoModalOpen(false);
             })

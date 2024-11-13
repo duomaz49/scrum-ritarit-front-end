@@ -1,6 +1,6 @@
-import {useState} from 'react'
+//import {useState} from 'react'
 import './App.css'
-import TicketsList from "./Components/TicketsList.tsx";
+import TicketsList from "./components/TicketsList.tsx";
 
 function App() {
     return (

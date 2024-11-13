@@ -8,7 +8,7 @@ interface SearchBarProps {
 export default function SearchBar(props: SearchBarProps) {
     const [query, setQuery] = useState<string>('');
 
-    const handleChange = e => {
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const newQuery = e.target.value;
         setQuery(newQuery);
         props.onSearch(newQuery);
