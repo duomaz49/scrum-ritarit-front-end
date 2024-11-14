@@ -6,7 +6,7 @@ const apiUrlTickets = `${BASE_URL_LOCALHOST}${ENDPOINTS.TICKETS}`;
 const username = 'john_doe';
 const password = 'password123';
 
-export const getTicket = (ticketNumber, setTicket, toggleConfirm) => {
+export const getTicket = (ticketNumber, setTicket, toggleConfirm, toggleUndo) => {
     const config: AxiosRequestConfig = {
         headers: {
             'Authorization': getBasicAuthHeader(username, password),
@@ -15,7 +15,7 @@ export const getTicket = (ticketNumber, setTicket, toggleConfirm) => {
     axios.get(`${apiUrlTickets}/${ticketNumber}`, config)
         .then(response => {
             setTicket(response.data);
-            toggleConfirm();
+            response.data.used ? toggleUndo() : toggleConfirm();
         })
         .catch(error => {
             alert("Ticket not found, please check the ticket number and try again.");

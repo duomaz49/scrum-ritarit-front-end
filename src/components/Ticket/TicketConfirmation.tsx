@@ -31,7 +31,7 @@ export default function TicketConfirmation() {
                         onSearch={setSearchQuery}
                     />
                     <Button
-                        onClick={() => getTicket(searchQuery, setTicket, toggleTicketConfirmModal)}
+                        onClick={() => getTicket(searchQuery, setTicket, toggleTicketConfirmModal, toggleTicketUndoModal)}
                         className="mt-4"
                         outline
                         color="success"
@@ -40,7 +40,7 @@ export default function TicketConfirmation() {
                     </Button>
                 </CardBody>
             </Card>
-            <GenericModal
+            {!ticket.used && <GenericModal
                 isModalOpen={isTicketConfirmationModalOpen}
                 toggleModal={toggleTicketConfirmModal}
                 title="Confirm ticket usage"
@@ -49,8 +49,8 @@ export default function TicketConfirmation() {
                 cancelText="No"
                 ticket={ticket}
                 onConfirm={() => markTicketUsed(searchQuery, toggleTicketConfirmModal)}
-            />
-            <GenericModal
+            />}
+            {ticket.used && <GenericModal
                 isModalOpen={isTicketUndoModalOpen}
                 toggleModal={toggleTicketUndoModal}
                 title="Undo ticket usage"
@@ -59,7 +59,7 @@ export default function TicketConfirmation() {
                 cancelText="No"
                 ticket={ticket}
                 onConfirm={() => markTicketUnused(searchQuery, toggleTicketUndoModal)}
-            />
+            />}
         </Container>
     );
 }
