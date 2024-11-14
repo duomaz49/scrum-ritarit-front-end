@@ -1,10 +1,15 @@
 import {Container, Card, CardBody, Table} from 'reactstrap';
 import {ITicket} from "../../types/ticket.ts";
+import {useEffect} from "react";
 
 interface TicketInformationProps {
     ticket: ITicket;
 }
+
 export default function TicketInformation(props: TicketInformationProps) {
+    useEffect(() => {
+        props.ticket?.used && alert("Just so you know, this ticket has already been used.");
+    }, []);
     return (
         <Container className="text-center d-flex flex-column align-items-center justify-content-center">
             <Card className='w-auto m-3'>
