@@ -26,5 +26,5 @@ COPY --from=build /app/dist  /usr/share/nginx/html/
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 
 WORKDIR /usr/share/nginx/html/
-EXPOSE 8081
+EXPOSE 9000
 USER nginx:root
