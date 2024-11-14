@@ -1,4 +1,4 @@
-import { ReactNode } from 'react';
+import React, { ReactNode } from 'react';
 import { Modal, ModalHeader, ModalBody } from 'reactstrap';
 
 interface OverlayProps {

@@ -4,20 +4,15 @@ import {IEvent} from "../../types/event.ts";
 import GenericList from "../utils/GenericList.ts.tsx";
 
 interface EventsCarouselProps {
-
+    handleEventClick: (event: IEvent) => void;
 }
 
-export default function EventsCarousel() {
+export default function EventsCarousel(props: EventsCarouselProps) {
     const [events, setEvents] = useState<IEvent[]>([]);
 
     useEffect(() => {
         getEvents(setEvents);
     }, []);
-
-    const handleEventClick = (event: IEvent) => {
-        console.log('Event clicked:', event);
-        // Handle event click, e.g., navigate to a ticket page
-    };
 
     return (
         <GenericList<IEvent>
@@ -27,7 +22,8 @@ export default function EventsCarousel() {
                     <div>Event: {event.eventName}</div>
                     <div>Total Tickets: {event.totalTickets}</div>
                 </>
-            )} onItemClick={handleEventClick}
+            )}
+            onItemClick={props.handleEventClick}
             buttonClassName={"rounded-pill p-4 mb-2 m-1"}
             listAsRowClassName={"d-flex flex-row overflow-auto p-0"}
             buttonColor="success"
