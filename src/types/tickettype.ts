@@ -1,4 +1,4 @@
 export interface ITicketType {
-    ticketTypeId?: number,
-    ticketTypeName?: string
+    REGULAR: number;
+    VIP: number;
 }
