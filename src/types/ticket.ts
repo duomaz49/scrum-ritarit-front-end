@@ -10,5 +10,3 @@ export interface ITicket {
     used?: boolean;
     usedTimestamp?: string;
 }
-
-export const defaultValue: Readonly<ITicket> = {};

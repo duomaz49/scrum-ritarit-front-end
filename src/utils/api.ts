@@ -3,8 +3,25 @@ import {BASE_URL_LOCALHOST, ENDPOINTS} from './constants';
 import { getBasicAuthHeader } from "./utils";
 
 const apiUrlTickets = `${BASE_URL_LOCALHOST}${ENDPOINTS.TICKETS}`;
+const apiUrlEvents = `${BASE_URL_LOCALHOST}${ENDPOINTS.EVENTS}`;
 const username = 'john_doe';
 const password = 'password123';
+
+export const getEvents = (setEvents) => {
+    const config: AxiosRequestConfig = {
+        headers: {
+            'Authorization': getBasicAuthHeader(username, password),
+        }
+    };
+    axios.get(`${apiUrlEvents}`, config)
+        .then(response => {
+            setEvents(response.data);
+        })
+        .catch(error => {
+            alert("No events found! Please contact the administrator.");
+            console.error("Error fetching tickets:", error);
+        });
+}
 
 export const getTicket = (ticketNumber, setTicket, toggleConfirm, toggleUndo) => {
     const config: AxiosRequestConfig = {
