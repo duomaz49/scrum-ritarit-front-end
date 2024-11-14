@@ -6,34 +6,31 @@ const apiUrlTickets = `${BASE_URL_LOCALHOST}${ENDPOINTS.TICKETS}`;
 const username = 'john_doe';
 const password = 'password123';
 
-export const getTickets = (setTickets) => {
+export const getTicket = (ticketNumber, setTicket, toggleConfirm) => {
     const config: AxiosRequestConfig = {
         headers: {
             'Authorization': getBasicAuthHeader(username, password),
         }
     };
-    axios.get(apiUrlTickets, config)
+    axios.get(`${apiUrlTickets}/${ticketNumber}`, config)
         .then(response => {
-            setTickets(response.data);
+            setTicket(response.data);
+            toggleConfirm();
         })
         .catch(error => {
+            alert("Ticket not found, please check the ticket number and try again.");
             console.error("Error fetching tickets:", error);
         });
 }
 
-export const markTicketUsed = (selectedTicketId, setTickets, setUsedModal) => {
-    if (!selectedTicketId) {
-        alert("Ticket ID is missing");
-        return;
-    }
+export const markTicketUsed = (ticketNumber, setUsedModal) => {
     const config: AxiosRequestConfig = {
         headers: {
             'Authorization': getBasicAuthHeader(username, password),
         }
     };
-    axios.put(`${apiUrlTickets}/id/${selectedTicketId}/use`, {}, config)
+    axios.put(`${apiUrlTickets}/${ticketNumber}/use`, {}, config)
         .then(() => {
-            getTickets(setTickets);
             setUsedModal(false);
         })
         .catch(error => {
@@ -41,22 +38,17 @@ export const markTicketUsed = (selectedTicketId, setTickets, setUsedModal) => {
         });
 };
 
-export const markTicketUnused = (selectedTicketId, setTickets, setUnUsedModal) => {
-    if (!selectedTicketId) {
-        alert("Ticket ID is missing");
-        return;
-    }
+export const markTicketUnused = (ticketNumber, setUnUsedModal) => {
     const config: AxiosRequestConfig = {
         headers: {
             'Authorization': getBasicAuthHeader(username, password),
         }
     };
-    axios.put(`${apiUrlTickets}/id/${selectedTicketId}/use?used=false`, {}, config)
+    axios.put(`${apiUrlTickets}/${ticketNumber}/use?used=false`, {}, config)
         .then(() => {
-            getTickets(setTickets);
             setUnUsedModal(false);
         })
         .catch(error => {
             console.error("Error undoing ticket usage:", error);
         });
-};
+}

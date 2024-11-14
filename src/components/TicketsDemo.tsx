@@ -1,13 +1,13 @@
 import { ITicket } from '../types/ticket.ts';
-import { Container, Row, Col, Card, CardBody, Button, ListGroup } from 'reactstrap';
-import SearchBar from "./SearchBar.tsx";
+import { Container, Row, Col, Card, CardBody } from 'reactstrap';
+import SearchBar from "./utils/SearchBar.tsx";
 import { useEffect, useState } from "react";
-import GenericModal from "./GenericModal.tsx";
-import {getTickets, markTicketUnused, markTicketUsed} from "../utils/api";
-import GenericList from "./GenericList.ts.tsx";
+import GenericModal from "./utils/GenericModal.tsx";
+import {getTicket, markTicketUnused, markTicketUsed} from "../utils/api";
+import GenericList from "./utils/GenericList.ts.tsx";
 
 
-export default function Tickets() {
+export default function TicketConfirmation() {
     const [searchQuery, setSearchQuery] = useState<string>('');
     const [tickets, setTickets] = useState<ITicket[]>([]);
     const [isTicketConfirmationModalOpen, setIsTicketConfirmModalOpen] = useState<boolean>(false);
@@ -17,7 +17,7 @@ export default function Tickets() {
     const usedTickets = tickets.filter(ticket => ticket.used);
 
     useEffect(() => {
-        getTickets(setTickets);
+        getTicket(setTickets);
     }, []);
 
     const filterBySearch = (tickets: ITicket[]) => {

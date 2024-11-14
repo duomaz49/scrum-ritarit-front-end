@@ -1,11 +1,11 @@
 //import {useState} from 'react'
 import './App.css'
-import Tickets from "./components/Tickets.tsx";
+import TicketConfirmation from "./components/Ticket/TicketConfirmation.tsx";
 
 function App() {
     return (
         <>
-            <Tickets/>
+            <TicketConfirmation/>
         </>
     )
 }
