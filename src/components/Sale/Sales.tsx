@@ -1,5 +1,5 @@
 import {Container, Card, CardBody} from 'reactstrap';
-import EventsCarousel from "../Event/EventsCarousel.tsx";
+import Events from "../Event/Events.tsx";
 import OverlayComponent from "../utils/Overlay.tsx";
 import EventsInformation from "../Event/EventInformation.tsx";
 import {useState} from "react";
@@ -23,9 +23,8 @@ export default function Sales(props: SalesProps) {
             <Card className='w-auto m-3 p-4'>
                 <CardBody className='text-start'>
                     <h2 className="text-center">LIPUNMYYNTI</h2>
-                    <EventsCarousel
-                        handleEventClick={handleEventClick}
-                    />
+                    <Events
+                        handleEventClick={handleEventClick}/>
                 </CardBody>
             </Card>
             <OverlayComponent

@@ -3,14 +3,15 @@ import {IEvent} from "../../types/event.ts";
 import {formatDate, formatTime} from "../../utils/date.ts";
 import {faCreditCard} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {ITicketType} from "../../types/tickettype.ts";
 
 interface EventsInformationProps {
     event: IEvent;
-    onBuyTicket: (ticketType: string, price: number) => void;
+    onBuyTicket: (ticketType: string, price: ITicketType) => void;
 }
 
 export default function EventsInformation(props: EventsInformationProps) {
-    const handleBuyClick = (ticketType: string, price: number) => {
+    const handleBuyClick = (ticketType: string, price: ITicketType) => {
         props.onBuyTicket(ticketType, price);
     };
     return (

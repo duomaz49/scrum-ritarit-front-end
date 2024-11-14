@@ -7,7 +7,7 @@ interface EventsCarouselProps {
     handleEventClick: (event: IEvent) => void;
 }
 
-export default function EventsCarousel(props: EventsCarouselProps) {
+export default function Events(props: EventsCarouselProps) {
     const [events, setEvents] = useState<IEvent[]>([]);
 
     useEffect(() => {
@@ -24,8 +24,8 @@ export default function EventsCarousel(props: EventsCarouselProps) {
                 </>
             )}
             onItemClick={props.handleEventClick}
-            buttonClassName={"rounded-pill p-4 mb-2 m-1"}
-            listAsRowClassName={"d-flex flex-row overflow-auto p-0"}
+            buttonClassName={"p-4 mb-2 m-1"}
+            listAsRowClassName={"d-flex overflow-auto p-0"}
             buttonColor="success"
             title="Upcoming Events"
         />
