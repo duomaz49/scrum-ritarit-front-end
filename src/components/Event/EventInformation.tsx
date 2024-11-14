@@ -1,19 +1,44 @@
-import {Container, Card, CardBody, Table, Button} from 'reactstrap';
-import {IEvent} from "../../types/event.ts";
-import {formatDate, formatTime} from "../../utils/date.ts";
-import {faCreditCard} from "@fortawesome/free-solid-svg-icons";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {ITicketType} from "../../types/tickettype.ts";
+import React, { useState } from 'react';
+import { Container, Card, CardBody, Table, Button, Input, Label, FormGroup } from 'reactstrap';
+import { IEvent } from "../../types/event.ts";
+import { formatDate, formatTime } from "../../utils/date.ts";
+import { faCreditCard } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { ITicketType } from "../../types/tickettype.ts";
 
 interface EventsInformationProps {
     event: IEvent;
-    onBuyTicket: (ticketType: string, price: ITicketType) => void;
+    onBuyTicket: (saleData: object) => void;
 }
 
 export default function EventsInformation(props: EventsInformationProps) {
-    const handleBuyClick = (ticketType: string, price: ITicketType) => {
-        props.onBuyTicket(ticketType, price);
+    const [selectedTicketType, setSelectedTicketType] = useState<{ ticketType: string; ticketDetails: ITicketType } | null>(null);
+    const [quantity, setQuantity] = useState<number>(1);
+    const [paymentMethod, setPaymentMethod] = useState<string>('Credit Card');
+
+    const handleConfirmBuy = (ticketType: string, ticketDetails: ITicketType) => {
+        setSelectedTicketType({ ticketType, ticketDetails });
     };
+
+    const handleSubmit = () => {
+        if (selectedTicketType) {
+            const saleData= {
+                userId: 1,
+                paymentMethod: paymentMethod,
+                tickets: [
+                    {
+                        eventId: props.event.eventId,
+                        ticketTypeId: props.event.ticketTypeId,
+                        quantity: quantity,
+                        used: false
+                    }
+                ]
+            }
+            props.onBuyTicket(saleData);
+            setSelectedTicketType(null);
+        }
+    };
+
     return (
         <Container className="text-center d-flex flex-column align-items-center justify-content-center">
             <Card className="w-auto m-3 p-2">
@@ -43,7 +68,7 @@ export default function EventsInformation(props: EventsInformationProps) {
                                 <Button
                                     color="success"
                                     outline
-                                    onClick={() => handleBuyClick(key, value)}
+                                    onClick={() => handleConfirmBuy(key, value)}  // Passing key and value
                                 >
                                     <FontAwesomeIcon icon={faCreditCard} />
                                 </Button>
@@ -57,6 +82,43 @@ export default function EventsInformation(props: EventsInformationProps) {
                 )}
                 </tbody>
             </Table>
+
+            {selectedTicketType && (
+                <Card className="w-auto m-3 p-2">
+                    <CardBody className="text-start">
+                        <FormGroup>
+                            <Label for="quantity">Quantity</Label>
+                            <Input
+                                type="number"
+                                id="quantity"
+                                value={quantity}
+                                min={1}
+                                onChange={(e) => setQuantity(Number(e.target.value))}
+                            />
+                        </FormGroup>
+                        <FormGroup>
+                            <Label for="paymentMethod">Payment Method</Label>
+                            <Input
+                                type="select"
+                                id="paymentMethod"
+                                value={paymentMethod}
+                                onChange={(e) => setPaymentMethod(e.target.value)}
+                            >
+                                <option value="Credit Card">Credit Card</option>
+                                <option value="Cash">Cash</option>
+                            </Input>
+                        </FormGroup>
+                        <FormGroup className="d-flex justify-content-between mt-4">
+                            <Button id="modal-cancel" color="danger" onClick={() => setSelectedTicketType(null)}>
+                                Cancel
+                            </Button>
+                            <Button color="success" onClick={handleSubmit}>
+                                Confirm
+                            </Button>
+                        </FormGroup>
+                    </CardBody>
+                </Card>
+            )}
         </Container>
     );
 }

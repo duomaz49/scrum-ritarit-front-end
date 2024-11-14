@@ -1,10 +1,10 @@
 import './App.css'
-import Sales from "./components/Sale/Sales.tsx";
+import TicketSale from "./components/Sale/TicketSale.tsx";
 
 function App() {
     return (
         <>
-            <Sales/>
+            <TicketSale/>
         </>
     )
 }

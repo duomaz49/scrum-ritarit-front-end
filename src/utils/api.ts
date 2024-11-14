@@ -69,3 +69,18 @@ export const markTicketUnused = (ticketNumber, setUnUsedModal) => {
             console.error("Error undoing ticket usage:", error);
         });
 }
+
+export const sellTicket = (saleData, setSellModal) => {
+    const config: AxiosRequestConfig = {
+        headers: {
+            'Authorization': getBasicAuthHeader(username, password),
+        }
+    };
+    axios.post(`${apiUrlTickets}`, saleData, config)
+        .then(() => {
+            setSellModal(false);
+        })
+        .catch(error => {
+            console.error("Error selling ticket:", error);
+        });
+}
