@@ -7,7 +7,7 @@ interface GenericModalProps {
     message: string; // The message displayed in the modal body
     confirmText: string; // Text for the confirm button
     cancelText: string; // Text for the cancel button
-    onConfirm: () => void; // Function to call when 'Yes' button is clicked
+    onConfirm: () => (selectedTicketId, setTickets, setUnUsedModal) => any; // Function to call when 'Yes' button is clicked
 }
 
 export default function GenericModal(props: GenericModalProps) {

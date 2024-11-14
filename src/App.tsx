@@ -1,11 +1,11 @@
 //import {useState} from 'react'
 import './App.css'
-import TicketsList from "./components/TicketsList.tsx";
+import Tickets from "./components/Tickets.tsx";
 
 function App() {
     return (
         <>
-            <TicketsList/>
+            <Tickets/>
         </>
     )
 }
