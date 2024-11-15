@@ -20,7 +20,6 @@ function App() {
         <LoadingProvider>
             <LoadingSpinner/>
             <AxiosSetup/>
-            <h1>SCRUM RITARIT - Ticket Guru</h1>
             <TicketSale/>
         </LoadingProvider>
     )
