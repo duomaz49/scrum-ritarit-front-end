@@ -1,6 +1,6 @@
 import {Container, Card, CardBody, Button, Row, Col} from 'reactstrap';
 import SearchBar from "../../utils/SearchBar.tsx";
-import {useEffect, useState} from "react";
+import { useState} from "react";
 import GenericModal from "../../utils/GenericModal.tsx";
 import {getTicket, markTicketUnused, markTicketUsed} from "../../../utils/api.ts";
 import {ITicket} from "../../../types/ticket.ts";
@@ -22,7 +22,6 @@ export default function TicketCheck() {
         setIsTicketUndoModalOpen(!isTicketUndoModalOpen);
     }
     const handleScanSuccess = (decodedText: string) => {
-        console.log("QR Code scanned:", decodedText);
         setScannedText(decodedText);
     };
 

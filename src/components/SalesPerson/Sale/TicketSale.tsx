@@ -24,7 +24,8 @@ export default function TicketSale() {
     };
 
     const handleTicketSale = (saleData) => {
-        sellTicket(saleData, setSuccesfulSale, setIsEventModalOpen, setIsProofOfSaleModalOpen)
+        setIsEventModalOpen(false);
+        sellTicket(saleData, setSuccesfulSale, setIsProofOfSaleModalOpen)
     }
 
     return (
