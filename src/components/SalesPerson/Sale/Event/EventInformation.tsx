@@ -47,31 +47,35 @@ export default function EventsInformation(props: EventsInformationProps) {
                     <div>{`Date: ${formatDate(props.event.eventDate)}`}</div>
                     <div>{`Time: ${formatTime(props.event.eventDate)}`}</div>
                     <hr className="my-4"/>
-                    <Table className="mt-2" bordered hover responsive>
-                        <thead>
-                        <tr>
-                            <th className="p-2 text-center">Ticket Type</th>
-                            <th className="p-2 text-center">Price</th>
-                            <th className="p-2 text-center">Action</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        {props.event.eventTicketTypes?.map((obj) => (
-                            <tr key={obj.ticketTypeId}>
-                                <td className="p-2 text-center">{obj.ticketTypeName}</td>
-                                <td className="p-2 text-center">{obj.price}</td>
-                                <td className="p-2 text-center">
-                                    <Button
-                                        color="success"
-                                        onClick={() => handleConfirmBuy(obj)}
-                                    >
-                                        <FontAwesomeIcon icon={faCreditCard}/>
-                                    </Button>
-                                </td>
+                    {props.event.eventTicketTypes && props.event.eventTicketTypes.length > 0 ? (
+                        <Table className="mt-2" bordered hover responsive>
+                            <thead>
+                            <tr>
+                                <th className="p-2 text-center">Ticket Type</th>
+                                <th className="p-2 text-center">Price</th>
+                                <th className="p-2 text-center">Action</th>
                             </tr>
-                        ))}
-                        </tbody>
-                    </Table>
+                            </thead>
+                            <tbody>
+                            {props.event.eventTicketTypes.map((obj) => (
+                                <tr key={obj.ticketTypeId}>
+                                    <td className="p-2 text-center">{obj.ticketTypeName}</td>
+                                    <td className="p-2 text-center">{obj.price}</td>
+                                    <td className="p-2 text-center">
+                                        <Button
+                                            color="success"
+                                            onClick={() => handleConfirmBuy(obj)}
+                                        >
+                                            <FontAwesomeIcon icon={faCreditCard} />
+                                        </Button>
+                                    </td>
+                                </tr>
+                            ))}
+                            </tbody>
+                        </Table>
+                    ) : (
+                        <div className="p-2 text-center">No ticket types available, please contact administrator</div>
+                    )}
                 </CardBody>
             </Card>
             {selectedTicketType && (
