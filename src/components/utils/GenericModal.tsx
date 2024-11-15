@@ -27,7 +27,7 @@ export default function GenericModal(props: GenericModalProps) {
                         ticket={props.ticket}
                     />}
             </ModalBody>
-            <ModalFooter>
+            <ModalFooter className="d-flex justify-content-around mt-4">
                 <Button id="modal-cancel" color="secondary" onClick={() => props.toggleModal()}>
                     {props.cancelText}
                 </Button>
