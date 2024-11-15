@@ -1,4 +1,4 @@
-import { Button, ListGroup } from 'reactstrap';
+import {Button, ListGroup, ListGroupItem} from 'reactstrap';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import { faEdit, faTrash, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 
@@ -32,7 +32,7 @@ export default function GenericList<T>(props: GenericListProps<T>) {
                             {props.renderItem(item)}
                         </Button>
                     ) : (
-                        <div key={index}
+                        <ListGroupItem key={index}
                              className={`${props.buttonClassName} d-flex justify-content-between align-items-center border p2 rounded border-dark `}
                         >
                             <div className="flex-grow-1">
@@ -65,7 +65,7 @@ export default function GenericList<T>(props: GenericListProps<T>) {
                                     <FontAwesomeIcon icon={faInfoCircle}/> Info
                                 </Button>
                             </div>
-                        </div>
+                        </ListGroupItem>
                     )
                 ))}
             </ListGroup>

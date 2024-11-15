@@ -5,7 +5,7 @@ import {getEvents} from "../../../utils/api.ts";
 import GenericList from "../../utils/GenericList.ts.tsx";
 
 
-export default function Events() {
+export default function AdminEventsList() {
     const [isEventModalOpen, setIsEventModalOpen] = useState<boolean>(false);
     const [selectedEvent, setSelectedEvent] = useState<IEvent>(null);
     const [events, setEvents] = useState<IEvent[]>([]);

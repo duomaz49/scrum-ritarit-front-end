@@ -1,10 +1,10 @@
 import React from "react";
-import { Card, CardBody, Container} from "reactstrap";
-import Events from "./Event/Events.tsx";
+import {Button, Card, CardBody, Container} from "reactstrap";
+import AdminEventsList from "./Event/AdminEventsList.tsx";
 
 // TODO: Katsotaan joko backissä tai frontissa, että onko sisäänkirjautunut käyttäjän id
 //  sama kuin tapahtumaan merkitty userId jotta saadaan näytettyä oikeat tapahtumat
-
+//  Lisää create event nappiin reititys evetFormiin
 
 export default function AdminView() {
     return (
@@ -13,7 +13,11 @@ export default function AdminView() {
                 <CardBody className='text-start'>
                     <h1 className="text-center">Admin View</h1>
                     <hr className="my-4"/>
-                    <Events/>
+                    <Button color="success" block>
+                        Create New Event
+                    </Button>
+                    <hr className="my-4"/>
+                    <AdminEventsList/>
                 </CardBody>
             </Card>
         </Container>
