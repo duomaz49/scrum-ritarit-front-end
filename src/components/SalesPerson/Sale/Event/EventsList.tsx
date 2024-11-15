@@ -1,5 +1,3 @@
-import {useEffect, useState} from "react";
-import {getEvents} from "../../../../utils/api.ts";
 import {IEvent} from "../../../../types/event.ts";
 import GenericList from "../../../utils/GenericList.ts.tsx";
 
