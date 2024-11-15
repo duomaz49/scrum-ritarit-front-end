@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
-import { Container, Card, CardBody, Table, Button, Input, Label, FormGroup } from 'reactstrap';
-import { IEvent } from "../../../../types/event.ts";
-import { formatDate, formatTime } from "../../../../utils/date.ts";
-import { faCreditCard } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { IEventTicketType } from "../../../../types/eventTicketType.ts";
+import React, {useState} from 'react';
+import {Container, Card, CardBody, Table, Button, Input, Label, FormGroup} from 'reactstrap';
+import {IEvent} from "../../../../types/event.ts";
+import {formatDate, formatTime} from "../../../../utils/date.ts";
+import {faCreditCard} from "@fortawesome/free-solid-svg-icons";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {IEventTicketType} from "../../../../types/eventTicketType.ts";
 
 interface EventsInformationProps {
     event: IEvent;
@@ -21,7 +21,7 @@ export default function EventsInformation(props: EventsInformationProps) {
 
     const handleSubmit = () => {
         if (selectedTicketType) {
-            const saleData= {
+            const saleData = {
                 userId: 1,
                 paymentMethod: paymentMethod,
                 tickets: [
@@ -40,43 +40,42 @@ export default function EventsInformation(props: EventsInformationProps) {
 
     return (
         <Container className="text-center d-flex flex-column align-items-center justify-content-center">
-            <Card className="w-auto m-3 p-2">
+            <Card className="w-100 m-3 p-2">
                 <CardBody className="text-start">
                     <h6>{`Event: ${props.event.eventName}`}</h6>
                     <div>{`Location: ${props.event.location}`}</div>
                     <div>{`Date: ${formatDate(props.event.eventDate)}`}</div>
                     <div>{`Time: ${formatTime(props.event.eventDate)}`}</div>
+                    <hr className="my-4"/>
+                    <Table className="mt-2" bordered hover responsive>
+                        <thead>
+                        <tr>
+                            <th className="p-2 text-center">Ticket Type</th>
+                            <th className="p-2 text-center">Price</th>
+                            <th className="p-2 text-center">Action</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {props.event.eventTicketTypes?.map((obj) => (
+                            <tr key={obj.ticketTypeId}>
+                                <td className="p-2 text-center">{obj.ticketTypeName}</td>
+                                <td className="p-2 text-center">{obj.price}</td>
+                                <td className="p-2 text-center">
+                                    <Button
+                                        color="success"
+                                        onClick={() => handleConfirmBuy(obj)}
+                                    >
+                                        <FontAwesomeIcon icon={faCreditCard}/>
+                                    </Button>
+                                </td>
+                            </tr>
+                        ))}
+                        </tbody>
+                    </Table>
                 </CardBody>
             </Card>
-
-            <Table className="mt-2" bordered hover responsive>
-                <thead>
-                <tr>
-                    <th className="p-2">Ticket Type</th>
-                    <th className="p-2">Price</th>
-                    <th className="p-2">Action</th>
-                </tr>
-                </thead>
-                <tbody>
-                {props.event.eventTicketTypes?.map((obj) => (
-                    <tr key={obj.ticketTypeId}>
-                        <td className="p-2">{obj.ticketTypeName}</td>
-                        <td className="p-2">{obj.price}</td>
-                        <td className="p-2">
-                            <Button
-                                color="success"
-                                onClick={() => handleConfirmBuy(obj)}
-                            >
-                                <FontAwesomeIcon icon={faCreditCard} />
-                            </Button>
-                        </td>
-                    </tr>
-                ))}
-                </tbody>
-            </Table>
-
             {selectedTicketType && (
-                <Card className="w-auto m-3 p-2">
+                <Card className="w-100 m-3 p-2">
                     <CardBody className="text-start">
                         <FormGroup>
                             <Label for="quantity">Quantity</Label>
@@ -100,14 +99,14 @@ export default function EventsInformation(props: EventsInformationProps) {
                                 <option value="Cash">Cash</option>
                             </Input>
                         </FormGroup>
-                        <FormGroup className="d-flex justify-content-between mt-4">
+                        <div className="d-flex justify-content-around mt-4">
                             <Button id="modal-cancel" color="danger" onClick={() => setSelectedTicketType(null)}>
-                                Cancel
+                                Back
                             </Button>
                             <Button color="success" onClick={handleSubmit}>
                                 Confirm
                             </Button>
-                        </FormGroup>
+                        </div>
                     </CardBody>
                 </Card>
             )}

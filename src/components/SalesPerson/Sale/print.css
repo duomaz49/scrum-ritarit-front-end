@@ -1,0 +1,29 @@
+@media print {
+    body * {
+        visibility: hidden;
+    }
+
+    .print-overlay, .print-overlay * {
+        visibility: visible;
+    }
+
+    .hide-on-print {
+        display: none !important;
+    }
+
+    .print-overlay {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%) scale(1.2);
+        border: none;
+        background-color: #fff;
+        width: auto;
+        height: auto;
+        max-width: 90%;
+        max-height: 90%;
+        box-sizing: border-box;
+        padding: 40px;
+        font-size: 1.2em;
+    }
+}

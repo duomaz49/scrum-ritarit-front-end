@@ -71,15 +71,19 @@ export const markTicketUnused = (ticketNumber, setUnUsedModal) => {
         });
 }
 
-export const sellTicket = (saleData, setEventModal) => {
+export const sellTicket = (saleData, setSuccesfulSale, setEventModal, setProofOfSaleModal) => {
     const config: AxiosRequestConfig = {
         headers: {
             'Authorization': getBasicAuthHeader(username, password),
         }
     };
     axios.post(`${apiUrlSales}`, saleData, config)
-        .then(() => {
+        .then(response => {
             setEventModal(false);
+            setSuccesfulSale(response.data);
+            setTimeout(() => {
+                setProofOfSaleModal(true);
+            },500);
         })
         .catch(error => {
             console.error("Error selling ticket:", error);
