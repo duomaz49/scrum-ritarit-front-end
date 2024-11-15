@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { Container, Card, CardBody, Table, Button, Input, Label, FormGroup } from 'reactstrap';
-import { IEvent } from "../../types/event.ts";
-import { formatDate, formatTime } from "../../utils/date.ts";
+import { IEvent } from "../../../../types/event.ts";
+import { formatDate, formatTime } from "../../../../utils/date.ts";
 import { faCreditCard } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { ITicketType } from "../../types/tickettype.ts";
+import { IEventTicketType } from "../../../../types/eventTicketType.ts";
 
 interface EventsInformationProps {
     event: IEvent;
@@ -12,12 +12,11 @@ interface EventsInformationProps {
 }
 
 export default function EventsInformation(props: EventsInformationProps) {
-    const [selectedTicketType, setSelectedTicketType] = useState<{ ticketType: string; ticketDetails: ITicketType } | null>(null);
+    const [selectedTicketType, setSelectedTicketType] = useState<IEventTicketType | null>(null);
     const [quantity, setQuantity] = useState<number>(1);
     const [paymentMethod, setPaymentMethod] = useState<string>('Credit Card');
-
-    const handleConfirmBuy = (ticketType: string, ticketDetails: ITicketType) => {
-        setSelectedTicketType({ ticketType, ticketDetails });
+    const handleConfirmBuy = (eventTicketType: IEventTicketType) => {
+        setSelectedTicketType(eventTicketType);
     };
 
     const handleSubmit = () => {
@@ -27,8 +26,8 @@ export default function EventsInformation(props: EventsInformationProps) {
                 paymentMethod: paymentMethod,
                 tickets: [
                     {
-                        eventId: props.event.eventId,
-                        ticketTypeId: props.event.ticketTypeId,
+                        eventId: selectedTicketType.eventId,
+                        ticketTypeId: selectedTicketType.ticketTypeId,
                         quantity: quantity,
                         used: false
                     }
@@ -59,27 +58,20 @@ export default function EventsInformation(props: EventsInformationProps) {
                 </tr>
                 </thead>
                 <tbody>
-                {props.event.ticketTypes && Object.entries(props.event.ticketTypes).length > 0 ? (
-                    Object.entries(props.event.ticketTypes).map(([key, value], index) => (
-                        <tr key={index}>
-                            <td className="p-2">{key}</td>
-                            <td className="p-2">{value}</td>
-                            <td className="p-2">
-                                <Button
-                                    color="success"
-                                    outline
-                                    onClick={() => handleConfirmBuy(key, value)}  // Passing key and value
-                                >
-                                    <FontAwesomeIcon icon={faCreditCard} />
-                                </Button>
-                            </td>
-                        </tr>
-                    ))
-                ) : (
-                    <tr>
-                        <td colSpan={3}>No ticket types available</td>
+                {props.event.eventTicketTypes?.map((obj) => (
+                    <tr key={obj.ticketTypeId}>
+                        <td className="p-2">{obj.ticketTypeName}</td>
+                        <td className="p-2">{obj.price}</td>
+                        <td className="p-2">
+                            <Button
+                                color="success"
+                                onClick={() => handleConfirmBuy(obj)}
+                            >
+                                <FontAwesomeIcon icon={faCreditCard} />
+                            </Button>
+                        </td>
                     </tr>
-                )}
+                ))}
                 </tbody>
             </Table>
 

@@ -1,4 +1,4 @@
-import {ITicketType} from "./tickettype.ts";
+import {IEventTicketType} from "./eventTicketType.ts";
 
 export interface IEvent {
     eventId?: number;
@@ -8,5 +8,5 @@ export interface IEvent {
     location?: string;
     totalTickets?: number;
     availableTickets?: number;
-    ticketTypes?: ITicketType[];
+    eventTicketTypes?: IEventTicketType[];
 }

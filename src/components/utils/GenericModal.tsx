@@ -1,6 +1,6 @@
 import {Modal, ModalHeader, ModalBody, ModalFooter, Button} from 'reactstrap';
 import {ITicket} from "../../types/ticket.ts";
-import TicketInformation from "../Ticket/TicketInformation.tsx";
+import TicketInformation from "../SalesPerson/Ticket/TicketInformation.tsx";
 import {useEffect} from "react";
 
 interface GenericModalProps {

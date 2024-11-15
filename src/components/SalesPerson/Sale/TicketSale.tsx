@@ -1,11 +1,10 @@
 import {Container, Card, CardBody} from 'reactstrap';
-import Events from "../Event/Events.tsx";
-import OverlayComponent from "../utils/Overlay.tsx";
-import EventsInformation from "../Event/EventInformation.tsx";
+import Events from "./Event/Events.tsx";
+import OverlayComponent from "../../utils/Overlay.tsx";
+import EventsInformation from "./Event/EventInformation.tsx";
 import {useState} from "react";
-import {IEvent} from "../../types/event.ts";
-import {sellTicket} from "../../utils/api.ts";
-import {ITicketType} from "../../types/tickettype.ts";
+import {IEvent} from "../../../types/event.ts";
+import {sellTicket} from "../../../utils/api.ts";
 
 // TODO: Katsotaan joko backissä tai frontissa, että onko sisäänkirjautunut käyttäjän id
 //  sama kuin tapahtumaan merkitty userId Myös saleen tartee userId:tä
@@ -20,7 +19,7 @@ export default function TicketSale() {
     };
 
     const handleTicketSale = (saleData) => {
-
+        sellTicket(saleData, setIsEventModalOpen)
     }
 
     return (
@@ -28,8 +27,7 @@ export default function TicketSale() {
             <Card className='w-auto m-3 p-4'>
                 <CardBody className='text-start'>
                     <h2 className="text-center">LIPUNMYYNTI</h2>
-                    <Events
-                        handleEventClick={handleEventClick}/>
+                    <Events handleEventClick={handleEventClick}/>
                 </CardBody>
             </Card>
             <OverlayComponent

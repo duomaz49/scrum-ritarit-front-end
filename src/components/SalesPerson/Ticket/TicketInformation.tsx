@@ -1,5 +1,5 @@
 import {Container, Card, CardBody, Table} from 'reactstrap';
-import {ITicket} from "../../types/ticket.ts";
+import {ITicket} from "../../../types/ticket.ts";
 import {useEffect} from "react";
 
 interface TicketInformationProps {

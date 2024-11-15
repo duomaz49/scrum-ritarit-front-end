@@ -1,9 +1,9 @@
 import {Container, Card, CardBody, Button, Row, Col} from 'reactstrap';
-import SearchBar from "../utils/SearchBar.tsx";
+import SearchBar from "../../utils/SearchBar.tsx";
 import {useEffect, useState} from "react";
-import GenericModal from "../utils/GenericModal.tsx";
-import {getTicket, markTicketUnused, markTicketUsed} from "../../utils/api.ts";
-import {ITicket} from "../../types/ticket.ts";
+import GenericModal from "../../utils/GenericModal.tsx";
+import {getTicket, markTicketUnused, markTicketUsed} from "../../../utils/api.ts";
+import {ITicket} from "../../../types/ticket.ts";
 import QrReader from "./QRCodeScanner.tsx";
 
 

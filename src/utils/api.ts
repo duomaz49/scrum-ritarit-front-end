@@ -4,6 +4,7 @@ import { getBasicAuthHeader } from "./utils";
 
 const apiUrlTickets = `${BASE_URL_LOCALHOST}${ENDPOINTS.TICKETS}`;
 const apiUrlEvents = `${BASE_URL_LOCALHOST}${ENDPOINTS.EVENTS}`;
+const apiUrlSales = `${BASE_URL_LOCALHOST}${ENDPOINTS.SALES}`;
 const username = 'john_doe';
 const password = 'password123';
 
@@ -70,15 +71,15 @@ export const markTicketUnused = (ticketNumber, setUnUsedModal) => {
         });
 }
 
-export const sellTicket = (saleData, setSellModal) => {
+export const sellTicket = (saleData, setEventModal) => {
     const config: AxiosRequestConfig = {
         headers: {
             'Authorization': getBasicAuthHeader(username, password),
         }
     };
-    axios.post(`${apiUrlTickets}`, saleData, config)
+    axios.post(`${apiUrlSales}`, saleData, config)
         .then(() => {
-            setSellModal(false);
+            setEventModal(false);
         })
         .catch(error => {
             console.error("Error selling ticket:", error);
