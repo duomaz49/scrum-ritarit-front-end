@@ -4,19 +4,14 @@ import {IEvent} from "../../../../types/event.ts";
 import GenericList from "../../../utils/GenericList.ts.tsx";
 
 interface EventsCarouselProps {
+    events: IEvent[];
     handleEventClick: (event: IEvent) => void;
 }
 
-export default function Events(props: EventsCarouselProps) {
-    const [events, setEvents] = useState<IEvent[]>([]);
-
-    useEffect(() => {
-        getEvents(setEvents);
-    }, []);
-
+export default function EventsList(props: EventsCarouselProps) {
     return (
         <GenericList<IEvent>
-            items={events}
+            items={props.events}
             renderItem={(event) => (
                 <>
                     <div>Event: {event.eventName}</div>

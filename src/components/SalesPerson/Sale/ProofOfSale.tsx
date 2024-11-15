@@ -2,7 +2,7 @@ import {Container, Card, CardBody, Button, Table} from 'reactstrap';
 import {formatDate, formatTime} from "../../../utils/date.ts";
 import React, {useEffect, useState} from "react";
 import {ISale} from "../../../types/sale.ts";
-import './print.css'
+import './ProofOfSalePrint.css';
 
 interface ProofOfSaleProps {
     sale: ISale;
