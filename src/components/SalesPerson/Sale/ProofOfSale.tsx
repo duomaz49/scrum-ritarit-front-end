@@ -32,7 +32,7 @@ export default function ProofOfSale(props: ProofOfSaleProps) {
         <Container className="text-center d-flex flex-column align-items-center justify-content-center">
             <Card className="w-100 m-3 print-overlay">
                 <CardBody className="text-start">
-                    <h5 className="text-center">OSTOTAPAHUTMA - {props.sale.saleId}</h5>
+                    <h5 className="text-center">Transaction - {props.sale.saleId}</h5>
                     <div>Payment method: {props.sale.paymentMethod}</div>
                     <div>Total tickets: {props.sale.tickets?.length}</div>
                     <div>Total Price: {props.sale.totalPrice}</div>

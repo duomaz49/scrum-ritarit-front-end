@@ -1,18 +1,20 @@
-import {Container, Card, CardBody} from 'reactstrap';
+import {Container, Card, CardBody, Button} from 'reactstrap';
 import EventsList from "./Event/EventsList.tsx";
 import OverlayComponent from "../../utils/Overlay.tsx";
 import EventsInformation from "./Event/EventInformation.tsx";
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import {IEvent} from "../../../types/event.ts";
 import {getEvents, sellTicket} from "../../../utils/api.ts";
 import ProofOfSale from "./ProofOfSale.tsx";
 import {ISale} from "../../../types/sale.ts";
+import {useNavigate} from "react-router-dom";
 
 // TODO: Katsotaan joko backissä tai frontissa, että onko sisäänkirjautunut käyttäjän id
 //  sama kuin tapahtumaan merkitty userId Myös saleen tartee userId:tä
 
 
 export default function TicketSale() {
+    const navigate = useNavigate();
     const [isEventModalOpen, setIsEventModalOpen] = useState<boolean>(false);
     const [isProofOfSaleModalOpen, setIsProofOfSaleModalOpen] = useState<boolean>(false);
     const [selectedEvent, setSelectedEvent] = useState<IEvent>(null);
@@ -37,8 +39,10 @@ export default function TicketSale() {
         <Container className="d-flex justify-content-center">
             {events && events.length > 0 && <Card className='w-50 m-3 p-4'>
                 <CardBody className='text-start'>
-                    <h2 className="text-center">LIPUNMYYNTI</h2>
+                    <h2 className="text-center">Sell Tickets here!</h2>
                     <EventsList events={events} handleEventClick={handleEventClick}/>
+                    <hr className="my-4"/>
+                    <Button color="success" block className="mb-2" onClick={() => navigate('/user')}>Go back</Button>
                 </CardBody>
             </Card>}
             <OverlayComponent

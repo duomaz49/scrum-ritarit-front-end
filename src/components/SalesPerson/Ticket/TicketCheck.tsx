@@ -1,13 +1,15 @@
 import {Container, Card, CardBody, Button, Row, Col} from 'reactstrap';
 import SearchBar from "../../utils/SearchBar.tsx";
-import {useState} from "react";
+import React, {useState} from "react";
 import TicketConfirm from "./TicketConfirm.tsx";
 import {getTicket, markTicketUnused, markTicketUsed} from "../../../utils/api.ts";
 import {ITicket} from "../../../types/ticket.ts";
 import QrReader from "./QRCodeScanner.tsx";
 import OverlayComponent from "../../utils/Overlay.tsx";
+import {useNavigate} from "react-router-dom";
 
 export default function TicketCheck() {
+    const navigate = useNavigate();
     const [searchQuery, setSearchQuery] = useState<string>('');
     const [ticket, setTicket] = useState<ITicket>({});
     const [isTicketConfirmationModalOpen, setIsTicketConfirmModalOpen] = useState<boolean>(false);
@@ -61,6 +63,7 @@ export default function TicketCheck() {
                             </Card>
                         </Col>
                     </Row>
+                    <Button color="success" block className="mb-2" onClick={() => navigate('/user')}>Go back</Button>
                 </CardBody>
             </Card>
             {!ticket.used &&

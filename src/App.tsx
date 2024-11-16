@@ -3,7 +3,8 @@ import React, {useEffect} from 'react';
 import {LoadingProvider, useLoading} from './context/LoadingContext';
 import {setupAxiosInterceptors} from './axios/axiosSetup';
 import LoadingSpinner from "./components/utils/LoadingSpinner.tsx";
-import TicketSale from "./components/SalesPerson/Sale/TicketSale.tsx";
+import routes from "./routes.tsx";
+import {RouterProvider} from "react-router-dom";
 
 const AxiosSetup: React.FC = () => {
     const {showLoading, hideLoading} = useLoading();
@@ -20,7 +21,7 @@ function App() {
         <LoadingProvider>
             <LoadingSpinner/>
             <AxiosSetup/>
-            <TicketSale/>
+            <RouterProvider router={routes} />
         </LoadingProvider>
     )
 }
