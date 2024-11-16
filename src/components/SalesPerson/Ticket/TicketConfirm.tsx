@@ -19,7 +19,6 @@ export default function TicketConfirm(props: TicketConfirmProps) {
                 <div>{props.message}</div>
                 {props.ticket && <TicketInformation ticket={props.ticket}/>}
                 <hr className="my-4"/>
-
                 <div className="d-flex justify-content-around mt-4">
                     <Button color="secondary" onClick={props.toggleModal}>
                         {props.cancelText}

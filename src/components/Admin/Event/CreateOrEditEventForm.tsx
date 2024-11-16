@@ -9,6 +9,8 @@ interface CreateOrEditEventFormProps {
     toggleModal: () => void;
 }
 
+// TODO: Pitäisikö liiptyypit joko luoda erillään tai olla valmiiksi tietokantaan luotuna?
+
 export default function CreateOrEditEventForm(props: CreateOrEditEventFormProps) {
     const [event, setEvent] = useState<IEvent>({
         eventName: "",
@@ -98,24 +100,7 @@ export default function CreateOrEditEventForm(props: CreateOrEditEventFormProps)
                     onChange={(e) => setEvent({...event, availableTickets: parseInt(e.target.value)})}
                 />
             </FormGroup>
-
-            {/*<FormGroup  className="mb-1 px-2 text-start">*/}
-            {/*    <Label for="ticketType" className="form-label p-1">*/}
-            {/*        Ticket Type*/}
-            {/*    </Label>*/}
-            {/*    <Input*/}
-            {/*        type="select"*/}
-            {/*        id="ticketType"*/}
-            {/*        value={ticketType}*/}
-            {/*        placeholder='Ticket type'*/}
-            {/*        required*/}
-            {/*        onChange={(e) => setTicketType(e.target.value)}*/}
-            {/*    >*/}
-            {/*        <option value={null}>Select ticket type</option>*/}
-            {/*    </Input>*/}
-            {/*</FormGroup>*/}
             <hr className="my-4"/>
-
             <div className="d-flex justify-content-around mt-4">
                 <Button color="danger" onClick={props.toggleModal}>
                     Cancel

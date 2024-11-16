@@ -1,7 +1,14 @@
 import React from "react";
 import { Card, CardBody, Col, Container, Row } from "reactstrap";
+import {IEvent} from "../../../types/event.ts";
 
-export default function EventStatistics() {
+interface EventStatisticsProps {
+    event: IEvent;
+}
+
+// TODO: Endpoint jolla hakea kaikki eventiin liitetyt ostotapahumat, monta myyty, saatavilla, totaali summa myytyjen lippujen hinnasta
+// TODO: Lisäksi kaikki lipputyypit ja niiden myydyt määrät
+export default function EventStatistics(props: EventStatisticsProps) {
     return (
         <Container className="d-flex align-items-center justify-content-center">
             <Card className="w-100 card-no-border p-2">
@@ -13,7 +20,7 @@ export default function EventStatistics() {
                             <Card className="w-100 card-no-border p-2">
                                 <CardBody
                                     className="text-center d-flex flex-column align-items-center justify-content-center">
-                                    <p>LOL</p>
+                                    <div>LOL</div>
                                 </CardBody>
                             </Card>
                         </Col>
@@ -21,7 +28,7 @@ export default function EventStatistics() {
                             <Card className="w-100 card-no-border p-2">
                                 <CardBody
                                     className="text-center d-flex flex-column align-items-center justify-content-center">
-                                    <p>LOL</p>
+                                    <div>LOL</div>
                                 </CardBody>
                             </Card>
                         </Col>
