@@ -1,7 +1,8 @@
-import {Modal, ModalHeader, ModalBody, ModalFooter, Button} from 'reactstrap';
-import {ITicket} from "../../../types/ticket.ts";
+import { Button } from 'reactstrap';
 import TicketInformation from "./TicketInformation.tsx";
-import {useEffect} from "react";
+import OverlayComponent from "../../utils/Overlay.tsx";
+import { ITicket } from "../../../types/ticket.ts";
+import React from "react";
 
 interface TicketConfirmModalProps {
     isModalOpen: boolean;
@@ -16,25 +17,25 @@ interface TicketConfirmModalProps {
 
 export default function TicketConfirmModal(props: TicketConfirmModalProps) {
     return (
-        <Modal id="generic-modal" isOpen={props.isModalOpen} toggle={props.toggleModal}>
-            <ModalHeader toggle={props.toggleModal}>
-                <div>{props.title}</div>
-            </ModalHeader>
-            <ModalBody id="generic-modal-body">
+        <OverlayComponent
+            isOpen={props.isModalOpen}
+            toggle={props.toggleModal}
+            title={props.title}
+        >
+            <div>
                 <div>{props.message}</div>
-                {props.ticket &&
-                    <TicketInformation
-                        ticket={props.ticket}
-                    />}
-            </ModalBody>
-            <ModalFooter className="d-flex justify-content-around mt-4">
-                <Button id="modal-cancel" color="secondary" onClick={() => props.toggleModal()}>
-                    {props.cancelText}
-                </Button>
-                <Button id="modal-confirm" color="success" onClick={() => props.onConfirm()}>
-                    {props.confirmText}
-                </Button>
-            </ModalFooter>
-        </Modal>
+                {props.ticket && <TicketInformation ticket={props.ticket}/>}
+                <hr className="my-4"/>
+
+                <div className="d-flex justify-content-around mt-4">
+                    <Button color="secondary" onClick={props.toggleModal}>
+                        {props.cancelText}
+                    </Button>
+                    <Button color="success" onClick={props.onConfirm}>
+                        {props.confirmText}
+                    </Button>
+                </div>
+            </div>
+        </OverlayComponent>
     );
 }

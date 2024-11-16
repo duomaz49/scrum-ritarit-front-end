@@ -57,6 +57,7 @@ export default function ProofOfSale(props: ProofOfSaleProps) {
                             </tbody>
                         ))}
                     </Table>
+                    <hr className="my-4"/>
                     <div className="d-flex justify-content-around mt-4">
                         <Button className="hide-on-print" color="danger" onClick={props.toggleModal}>
                             Back

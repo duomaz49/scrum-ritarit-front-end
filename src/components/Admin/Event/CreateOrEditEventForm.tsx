@@ -114,6 +114,8 @@ export default function CreateOrEditEventForm(props: CreateOrEditEventFormProps)
             {/*        <option value={null}>Select ticket type</option>*/}
             {/*    </Input>*/}
             {/*</FormGroup>*/}
+            <hr className="my-4"/>
+
             <div className="d-flex justify-content-around mt-4">
                 <Button color="danger" onClick={props.toggleModal}>
                     Cancel
@@ -123,5 +125,5 @@ export default function CreateOrEditEventForm(props: CreateOrEditEventFormProps)
                 </Button>
             </div>
         </Form>
-);
+    );
 }
