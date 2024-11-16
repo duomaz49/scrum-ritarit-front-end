@@ -5,6 +5,7 @@ import {getEvents} from "../../../utils/api.ts";
 import GenericList from "../../utils/GenericList.tsx";
 import OverlayComponent from "../../utils/Overlay.tsx";
 import CreateOrEditEventForm from "./CreateOrEditEventForm.tsx";
+import DeleteConfirmation from "../../utils/DeleteConfirmation.tsx";
 
 
 export default function AdminEventsList() {
@@ -59,6 +60,17 @@ export default function AdminEventsList() {
                 title='Edit event'
             >
                 <CreateOrEditEventForm eventToEdit={selectedEvent} toggleModal={() => setIsEditEventModalOpen(!isEditEventModalOpen)}  onSubmit={() => {}}/>
+            </OverlayComponent>
+            <OverlayComponent
+                isOpen={isDeleteEventModalOpen}
+                toggle={() => setIsDeleteEventModalOpen(!isDeleteEventModalOpen)}
+                title='Delete event'
+            >
+                <DeleteConfirmation
+                    message="Click Yes to delete the event"
+                    confirmText="Yes" cancelText="No"
+                    onConfirm={() => {}}
+                    onCancel={() => setIsDeleteEventModalOpen(!isDeleteEventModalOpen)}/>
             </OverlayComponent>
         </>
 

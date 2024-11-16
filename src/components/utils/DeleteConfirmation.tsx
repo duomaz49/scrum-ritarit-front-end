@@ -13,6 +13,8 @@ export default function DeleteConfirmation(props: DeleteConfirmationProps) {
     return (
         <div>
             <div>{props.message}</div>
+            <hr className="my-4"/>
+
             <div className="d-flex justify-content-around mt-4">
                 <Button color="secondary" onClick={props.onCancel}>
                     {props.cancelText}
