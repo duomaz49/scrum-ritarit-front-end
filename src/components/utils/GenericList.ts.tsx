@@ -1,12 +1,12 @@
-import {Button, ListGroup, ListGroupItem} from 'reactstrap';
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import { Button, ListGroup, ListGroupItem } from 'reactstrap';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit, faTrash, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 
 interface GenericListProps<T> {
     isAdmin?: boolean;
     items: T[];
     renderItem: (item: T) => string | React.ReactNode;
-    onItemClick: (item: T) => void;
+    onItemClick: (item: T, action: 'edit' | 'delete' | 'info' | 'click') => void;
     buttonColor: string;
     title: string;
     disableCondition?: (item: T) => boolean;
@@ -27,13 +27,13 @@ export default function GenericList<T>(props: GenericListProps<T>) {
                             outline
                             className={props.buttonClassName}
                             disabled={props.disableCondition ? props.disableCondition(item) : false}
-                            onClick={() => props.onItemClick(item)}
+                            onClick={() => props.onItemClick(item, 'click')}
                         >
                             {props.renderItem(item)}
                         </Button>
                     ) : (
                         <ListGroupItem key={index}
-                             className={`${props.buttonClassName} d-flex justify-content-between align-items-center border p2 rounded border-dark `}
+                                       className={`${props.buttonClassName} d-flex justify-content-between align-items-center border p2 rounded border-dark `}
                         >
                             <div className="flex-grow-1">
                                 {props.renderItem(item)}
@@ -44,7 +44,7 @@ export default function GenericList<T>(props: GenericListProps<T>) {
                                     color="warning"
                                     className="m-1"
                                     outline
-                                    onClick={() => props.onItemClick(item)}
+                                    onClick={() => props.onItemClick(item, 'edit')}
                                 >
                                     <FontAwesomeIcon icon={faEdit}/> Edit
                                 </Button>
@@ -52,7 +52,7 @@ export default function GenericList<T>(props: GenericListProps<T>) {
                                     color="danger"
                                     className="m-1"
                                     outline
-                                    onClick={() => props.onItemClick(item)}
+                                    onClick={() => props.onItemClick(item, 'delete')}
                                 >
                                     <FontAwesomeIcon icon={faTrash}/> Delete
                                 </Button>
@@ -60,7 +60,7 @@ export default function GenericList<T>(props: GenericListProps<T>) {
                                     color="primary"
                                     className="m-1"
                                     outline
-                                    onClick={() => props.onItemClick(item)}
+                                    onClick={() => props.onItemClick(item, 'info')}
                                 >
                                     <FontAwesomeIcon icon={faInfoCircle}/> Info
                                 </Button>
