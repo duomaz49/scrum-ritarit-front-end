@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react'
 import EventsList from "./../../SalesPerson/Sale/Event/EventsList.tsx";
 import {IEvent} from "../../../types/event.ts";
 import {getEvents} from "../../../utils/api.ts";
-import GenericList from "../../utils/GenericList.ts.tsx";
+import GenericList from "../../utils/GenericList.tsx";
 import OverlayComponent from "../../utils/Overlay.tsx";
 import CreateOrEditEventForm from "./CreateOrEditEventForm.tsx";
 

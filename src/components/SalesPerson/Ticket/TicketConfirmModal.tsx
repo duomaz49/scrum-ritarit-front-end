@@ -1,9 +1,9 @@
 import {Modal, ModalHeader, ModalBody, ModalFooter, Button} from 'reactstrap';
-import {ITicket} from "../../types/ticket.ts";
-import TicketInformation from "../SalesPerson/Ticket/TicketInformation.tsx";
+import {ITicket} from "../../../types/ticket.ts";
+import TicketInformation from "./TicketInformation.tsx";
 import {useEffect} from "react";
 
-interface GenericModalProps {
+interface TicketConfirmModalProps {
     isModalOpen: boolean;
     toggleModal: () => void;
     title: string;
@@ -14,7 +14,7 @@ interface GenericModalProps {
     ticket?: ITicket;
 }
 
-export default function GenericModal(props: GenericModalProps) {
+export default function TicketConfirmModal(props: TicketConfirmModalProps) {
     return (
         <Modal id="generic-modal" isOpen={props.isModalOpen} toggle={props.toggleModal}>
             <ModalHeader toggle={props.toggleModal}>

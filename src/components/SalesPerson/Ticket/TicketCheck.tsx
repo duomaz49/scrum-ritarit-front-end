@@ -1,7 +1,7 @@
 import {Container, Card, CardBody, Button, Row, Col} from 'reactstrap';
 import SearchBar from "../../utils/SearchBar.tsx";
 import { useState} from "react";
-import GenericModal from "../../utils/GenericModal.tsx";
+import TicketConfirmModal from "./TicketConfirmModal.tsx";
 import {getTicket, markTicketUnused, markTicketUsed} from "../../../utils/api.ts";
 import {ITicket} from "../../../types/ticket.ts";
 import QrReader from "./QRCodeScanner.tsx";
@@ -56,7 +56,7 @@ export default function TicketCheck() {
                 </Col>
             </Row>
 
-            {!ticket.used && <GenericModal
+            {!ticket.used && <TicketConfirmModal
                 isModalOpen={isTicketConfirmationModalOpen}
                 toggleModal={toggleTicketConfirmModal}
                 title="Confirm ticket usage"
@@ -66,7 +66,7 @@ export default function TicketCheck() {
                 ticket={ticket}
                 onConfirm={() => markTicketUsed(searchQuery, toggleTicketConfirmModal)}
             />}
-            {ticket.used && <GenericModal
+            {ticket.used && <TicketConfirmModal
                 isModalOpen={isTicketUndoModalOpen}
                 toggleModal={toggleTicketUndoModal}
                 title="Undo ticket usage"

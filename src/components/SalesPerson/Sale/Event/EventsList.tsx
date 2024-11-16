@@ -1,5 +1,5 @@
 import {IEvent} from "../../../../types/event.ts";
-import GenericList from "../../../utils/GenericList.ts.tsx";
+import GenericList from "../../../utils/GenericList.tsx";
 
 interface EventsCarouselProps {
     events: IEvent[];
