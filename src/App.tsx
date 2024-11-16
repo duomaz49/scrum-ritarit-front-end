@@ -4,6 +4,7 @@ import {LoadingProvider, useLoading} from './context/LoadingContext';
 import {setupAxiosInterceptors} from './axios/axiosSetup';
 import LoadingSpinner from "./components/utils/LoadingSpinner.tsx";
 import AdminView from "./components/Admin/AdminView.tsx";
+import TicketCheck from "./components/SalesPerson/Ticket/TicketCheck.tsx";
 
 const AxiosSetup: React.FC = () => {
     const {showLoading, hideLoading} = useLoading();
@@ -20,7 +21,7 @@ function App() {
         <LoadingProvider>
             <LoadingSpinner/>
             <AxiosSetup/>
-            <AdminView/>
+            <TicketCheck/>
         </LoadingProvider>
     )
 }

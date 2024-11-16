@@ -4,10 +4,8 @@ import OverlayComponent from "../../utils/Overlay.tsx";
 import { ITicket } from "../../../types/ticket.ts";
 import React from "react";
 
-interface TicketConfirmModalProps {
-    isModalOpen: boolean;
+interface TicketConfirmProps {
     toggleModal: () => void;
-    title: string;
     message: string;
     confirmText: string;
     cancelText: string;
@@ -15,13 +13,8 @@ interface TicketConfirmModalProps {
     ticket?: ITicket;
 }
 
-export default function TicketConfirmModal(props: TicketConfirmModalProps) {
+export default function TicketConfirm(props: TicketConfirmProps) {
     return (
-        <OverlayComponent
-            isOpen={props.isModalOpen}
-            toggle={props.toggleModal}
-            title={props.title}
-        >
             <div>
                 <div>{props.message}</div>
                 {props.ticket && <TicketInformation ticket={props.ticket}/>}
@@ -36,6 +29,5 @@ export default function TicketConfirmModal(props: TicketConfirmModalProps) {
                     </Button>
                 </div>
             </div>
-        </OverlayComponent>
     );
 }

@@ -1,10 +1,11 @@
 import {Container, Card, CardBody, Button, Row, Col} from 'reactstrap';
 import SearchBar from "../../utils/SearchBar.tsx";
-import { useState} from "react";
-import TicketConfirmModal from "./TicketConfirmModal.tsx";
+import {useState} from "react";
+import TicketConfirm from "./TicketConfirm.tsx";
 import {getTicket, markTicketUnused, markTicketUsed} from "../../../utils/api.ts";
 import {ITicket} from "../../../types/ticket.ts";
 import QrReader from "./QRCodeScanner.tsx";
+import OverlayComponent from "../../utils/Overlay.tsx";
 
 
 export default function TicketCheck() {
@@ -26,7 +27,7 @@ export default function TicketCheck() {
     };
 
     return (
-        <Container className="d-flex align-items-center justify-content-center" style={{ minHeight: '100vh' }}>
+        <Container className="d-flex align-items-center justify-content-center" style={{minHeight: '100vh'}}>
             <Row className="d-flex flex-column align-items-center justify-content-center w-100">
                 <Col xs="12" sm="6" md="6" className="mb-4 d-flex justify-content-center">
                     <Card className="w-100 card-no-border p-2">
@@ -56,26 +57,40 @@ export default function TicketCheck() {
                 </Col>
             </Row>
 
-            {!ticket.used && <TicketConfirmModal
-                isModalOpen={isTicketConfirmationModalOpen}
-                toggleModal={toggleTicketConfirmModal}
-                title="Confirm ticket usage"
-                message="Are you sure you want to mark this ticket as used?"
-                confirmText="Yes"
-                cancelText="No"
-                ticket={ticket}
-                onConfirm={() => markTicketUsed(searchQuery, toggleTicketConfirmModal)}
-            />}
-            {ticket.used && <TicketConfirmModal
-                isModalOpen={isTicketUndoModalOpen}
-                toggleModal={toggleTicketUndoModal}
-                title="Undo ticket usage"
-                message="Are you sure you want to undo the ticket, it will be usable again!"
-                confirmText="Yes"
-                cancelText="No"
-                ticket={ticket}
-                onConfirm={() => markTicketUnused(searchQuery, toggleTicketUndoModal)}
-            />}
+            {!ticket.used &&
+                <OverlayComponent
+                    isOpen={isTicketConfirmationModalOpen}
+                    toggle={toggleTicketConfirmModal}
+                    title="Confirm ticket usage"
+                >
+                    <TicketConfirm
+                        toggleModal={toggleTicketConfirmModal}
+                        message="Are you sure you want to mark this ticket as used?"
+                        confirmText="Yes"
+                        cancelText="No"
+                        ticket={ticket}
+                        onConfirm={() => markTicketUsed(searchQuery, toggleTicketConfirmModal)}
+                    />
+                </OverlayComponent>
+
+            }
+            {ticket.used &&
+                <OverlayComponent
+                    isOpen={isTicketConfirmationModalOpen}
+                    toggle={toggleTicketConfirmModal}
+                    title="Undo ticket usage"
+                >
+                    <TicketConfirm
+                        toggleModal={toggleTicketUndoModal}
+                        message="Are you sure you want to undo the ticket, it will be usable again!"
+                        confirmText="Yes"
+                        cancelText="No"
+                        ticket={ticket}
+                        onConfirm={() => markTicketUnused(searchQuery, toggleTicketUndoModal)}
+                    />
+                </OverlayComponent>
+
+            }
         </Container>
     );
 }
