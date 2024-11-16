@@ -44,12 +44,14 @@ export default function TicketSale() {
             <OverlayComponent
                 isOpen={isEventModalOpen}
                 toggle={() => setIsEventModalOpen(!isEventModalOpen)}
+                title="Event information"
             >
                 <EventsInformation event={selectedEvent} onBuyTicket={handleTicketSale}/>
             </OverlayComponent>
             <OverlayComponent
                 isOpen={isProofOfSaleModalOpen}
                 toggle={() => setIsProofOfSaleModalOpen(!isProofOfSaleModalOpen)}
+                title="Proof of sale"
             >
                 <ProofOfSale sale={succesfulSale}
                              toggleModal={() => setIsProofOfSaleModalOpen(!isProofOfSaleModalOpen)}/>

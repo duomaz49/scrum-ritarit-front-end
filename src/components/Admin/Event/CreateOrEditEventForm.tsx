@@ -6,6 +6,7 @@ import moment from "moment/moment";
 interface CreateOrEditEventFormProps {
     eventToEdit?: IEvent;
     onSubmit: (event: IEvent) => void;
+    toggleModal: () => void;
 }
 
 export default function CreateOrEditEventForm(props: CreateOrEditEventFormProps) {
@@ -21,7 +22,10 @@ export default function CreateOrEditEventForm(props: CreateOrEditEventFormProps)
 
     useEffect(() => {
         if (props.eventToEdit) {
-            setEvent({ ...props.eventToEdit });
+            setEvent({
+                ...props.eventToEdit,
+                eventDate: moment(props.eventToEdit.eventDate).format("YYYY-MM-DD")
+            });
         }
     }, [props.eventToEdit]);
 
@@ -111,7 +115,7 @@ export default function CreateOrEditEventForm(props: CreateOrEditEventFormProps)
             {/*    </Input>*/}
             {/*</FormGroup>*/}
             <div className="d-flex justify-content-around mt-4">
-                <Button color="danger">
+                <Button color="danger" onClick={props.toggleModal}>
                     Cancel
                 </Button>
                 <Button type="submit" color="success">
