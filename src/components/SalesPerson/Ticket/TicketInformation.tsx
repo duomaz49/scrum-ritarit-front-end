@@ -17,7 +17,7 @@ export default function TicketInformation(props: TicketInformationProps) {
                     <h5>Ticket Information:</h5>
                     <div>Ticket: {props.ticket.ticketNumber}</div>
                     <div>Price: {props.ticket.price}</div>
-                    <div>Event: {props.ticket.eventId}</div>
+                    <div>Event: {props.ticket.eventName}</div>
                     <div>Type: {props.ticket.ticketTypeId}</div>
                     <div>Used: {props.ticket.used ? 'Used' : 'Unused'}</div>
                 </CardBody>
