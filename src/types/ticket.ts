@@ -4,6 +4,7 @@ export interface ITicket {
     eventName?: string;
     saleId?: number;
     ticketTypeId?: number;
+    ticketTypeName?: string;
     ticketNumber?: string;
     quantity?: number;
     price?: number;
