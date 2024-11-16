@@ -7,7 +7,6 @@ import {ITicket} from "../../../types/ticket.ts";
 import QrReader from "./QRCodeScanner.tsx";
 import OverlayComponent from "../../utils/Overlay.tsx";
 
-
 export default function TicketCheck() {
     const [searchQuery, setSearchQuery] = useState<string>('');
     const [ticket, setTicket] = useState<ITicket>({});
@@ -22,41 +21,48 @@ export default function TicketCheck() {
     const toggleTicketUndoModal = () => {
         setIsTicketUndoModalOpen(!isTicketUndoModalOpen);
     }
+
     const handleScanSuccess = (decodedText: string) => {
         setScannedText(decodedText);
     };
 
     return (
-        <Container className="d-flex align-items-center justify-content-center" style={{minHeight: '100vh'}}>
-            <Row className="d-flex flex-column align-items-center justify-content-center w-100">
-                <Col xs="12" sm="6" md="6" className="mb-4 d-flex justify-content-center">
-                    <Card className="w-100 card-no-border p-2">
-                        <CardBody className="text-center d-flex flex-column align-items-center justify-content-center">
-                            <QrReader onScanSuccess={handleScanSuccess}/>
-                        </CardBody>
-                    </Card>
-                </Col>
-                <Col xs="12" sm="6" md="6" className="mb-4 d-flex justify-content-center">
-                    <Card className="w-100 card-no-border p-2">
-                        <CardBody className="text-center d-flex flex-column align-items-center justify-content-center">
-                            <h3 className="mt-4 mb-4">Enter a ticket number:</h3>
-                            <SearchBar
-                                width={"w-50"}
-                                onSearch={setSearchQuery}
-                            />
-                            <Button
-                                onClick={() => getTicket(searchQuery, setTicket, toggleTicketConfirmModal, toggleTicketUndoModal)}
-                                className="mt-4"
-                                outline
-                                color="success"
-                            >
-                                Check Ticket
-                            </Button>
-                        </CardBody>
-                    </Card>
-                </Col>
-            </Row>
-
+        <Container className="d-flex align-items-center justify-content-center">
+            <Card className="w-100 card-no-border p-2">
+                <CardBody className="text-center d-flex flex-column align-items-center justify-content-center">
+                    <h4 className="text-center mb-3">Validate customer tickets</h4>
+                    <Row className="w-100">
+                        <Col xs="12" sm="6" md="6" lg="6" xl="6" className="mb-4 d-flex justify-content-center">
+                            <Card className="w-100 card-no-border p-2">
+                                <CardBody
+                                    className="text-center d-flex flex-column align-items-center justify-content-center">
+                                    <QrReader onScanSuccess={handleScanSuccess}/>
+                                </CardBody>
+                            </Card>
+                        </Col>
+                        <Col xs="12" sm="6" md="6" lg="6" xl="6" className="mb-4 d-flex justify-content-center">
+                            <Card className="w-100 card-no-border p-2">
+                                <CardBody
+                                    className="text-center d-flex flex-column align-items-center justify-content-center">
+                                    <h3 className="mt-4 mb-4">Enter a ticket number:</h3>
+                                    <SearchBar
+                                        width={"w-50"}
+                                        onSearch={setSearchQuery}
+                                    />
+                                    <Button
+                                        onClick={() => getTicket(searchQuery, setTicket, toggleTicketConfirmModal, toggleTicketUndoModal)}
+                                        className="mt-4"
+                                        outline
+                                        color="success"
+                                    >
+                                        Check Ticket
+                                    </Button>
+                                </CardBody>
+                            </Card>
+                        </Col>
+                    </Row>
+                </CardBody>
+            </Card>
             {!ticket.used &&
                 <OverlayComponent
                     isOpen={isTicketConfirmationModalOpen}
@@ -72,12 +78,11 @@ export default function TicketCheck() {
                         onConfirm={() => markTicketUsed(searchQuery, toggleTicketConfirmModal)}
                     />
                 </OverlayComponent>
-
             }
             {ticket.used &&
                 <OverlayComponent
-                    isOpen={isTicketConfirmationModalOpen}
-                    toggle={toggleTicketConfirmModal}
+                    isOpen={isTicketUndoModalOpen}
+                    toggle={toggleTicketUndoModal}
                     title="Undo ticket usage"
                 >
                     <TicketConfirm
@@ -89,7 +94,6 @@ export default function TicketCheck() {
                         onConfirm={() => markTicketUnused(searchQuery, toggleTicketUndoModal)}
                     />
                 </OverlayComponent>
-
             }
         </Container>
     );
