@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 export default function NotFound() {
     const navigate = useNavigate();
     return (
-        <Container className="d-flex justify-content-center align-items-center" style={{ minHeight: '100vh' }}>
+        <Container className="d-flex justify-content-center align-items-center">
             <Row className="text-center">
                 <Col>
                     <h1 className="display-1 text-danger">404</h1>
