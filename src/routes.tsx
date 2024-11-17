@@ -4,9 +4,14 @@ import AdminView from "./components/Admin/AdminView.tsx";
 import TicketSale from "./components/SalesPerson/Sale/TicketSale.tsx";
 import TicketCheck from "./components/SalesPerson/Ticket/TicketCheck.tsx";
 import NotFound from "./components/utils/RouteError.tsx";
+import LoginView from './components/Login/Login.tsx';
 
 // Define routes using createBrowserRouter
 const routes = createBrowserRouter([
+    {
+        path: '/login',
+        element: <LoginView />,
+    },
     {
         path: '/user',
         element: <SalesPersonView />

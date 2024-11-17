@@ -7,4 +7,5 @@ export const ENDPOINTS = {
     EVENTS: '/events',
     SALES: '/sales',
     USERS: '/users',
+    LOGIN: '/login'
 };
