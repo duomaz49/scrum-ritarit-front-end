@@ -1,4 +1,4 @@
-import { createBrowserRouter } from 'react-router-dom';
+import { createBrowserRouter, Navigate } from 'react-router-dom';
 import SalesPersonView from './components/SalesPerson/SalesPersonView.tsx';
 import AdminView from "./components/Admin/AdminView.tsx";
 import TicketSale from "./components/SalesPerson/Sale/TicketSale.tsx";
@@ -8,6 +8,10 @@ import LoginView from './components/Login/Login.tsx';
 
 // Define routes using createBrowserRouter
 const routes = createBrowserRouter([
+    {
+        path: '/',
+        element: <Navigate to='/login' replace />
+    },
     {
         path: '/login',
         element: <LoginView />,
