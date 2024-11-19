@@ -63,7 +63,7 @@ export default function TicketCheck() {
                             </Card>
                         </Col>
                     </Row>
-                    <Button color="success" block className="mb-2" onClick={() => navigate('/user')}>Go back</Button>
+                    <Button color="warning" block className="mb-2" onClick={() => navigate('/user')}>Go back</Button>
                 </CardBody>
             </Card>
             {!ticket.used &&

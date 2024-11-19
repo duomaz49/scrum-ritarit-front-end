@@ -42,7 +42,7 @@ export default function TicketSale() {
                     <h2 className="text-center">Sell Tickets here!</h2>
                     <EventsList events={events} handleEventClick={handleEventClick}/>
                     <hr className="my-4"/>
-                    <Button color="success" block className="mb-2" onClick={() => navigate('/user')}>Go back</Button>
+                    <Button color="warning" block className="mb-2" onClick={() => navigate('/user')}>Go back</Button>
                 </CardBody>
             </Card>}
             <OverlayComponent
