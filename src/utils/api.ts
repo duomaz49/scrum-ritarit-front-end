@@ -1,17 +1,15 @@
 import axios, { AxiosRequestConfig } from "axios";
-import {BASE_URL_LOCALHOST, ENDPOINTS} from './constants';
+import {BASE_URL, BASE_URL_LOCALHOST, ENDPOINTS} from './constants';
 import { getBasicAuthHeader } from "./utils";
 
-const apiUrlTickets = `${BASE_URL_LOCALHOST}${ENDPOINTS.TICKETS}`;
-const apiUrlEvents = `${BASE_URL_LOCALHOST}${ENDPOINTS.EVENTS}`;
-const apiUrlSales = `${BASE_URL_LOCALHOST}${ENDPOINTS.SALES}`;
-const username = 'john_doe';
-const password = 'password123';
+const apiUrlTickets = `${BASE_URL}${ENDPOINTS.TICKETS}`;
+const apiUrlEvents = `${BASE_URL}${ENDPOINTS.EVENTS}`;
+const apiUrlSales = `${BASE_URL}${ENDPOINTS.SALES}`;
 
 export const getEvents = (setEvents) => {
     const config: AxiosRequestConfig = {
         headers: {
-            'Authorization': getBasicAuthHeader(username, password),
+            'Authorization': sessionStorage.getItem('authHeader')
         }
     };
     axios.get(`${apiUrlEvents}`, config)
@@ -27,7 +25,7 @@ export const getEvents = (setEvents) => {
 export const getTicket = (ticketNumber, setTicket, toggleConfirm, toggleUndo) => {
     const config: AxiosRequestConfig = {
         headers: {
-            'Authorization': getBasicAuthHeader(username, password),
+            'Authorization': sessionStorage.getItem('authHeader')
         }
     };
     axios.get(`${apiUrlTickets}/${ticketNumber}`, config)
@@ -44,7 +42,7 @@ export const getTicket = (ticketNumber, setTicket, toggleConfirm, toggleUndo) =>
 export const markTicketUsed = (ticketNumber, setUsedModal) => {
     const config: AxiosRequestConfig = {
         headers: {
-            'Authorization': getBasicAuthHeader(username, password),
+            'Authorization': sessionStorage.getItem('authHeader')
         }
     };
     axios.put(`${apiUrlTickets}/${ticketNumber}/use`, {}, config)
@@ -59,7 +57,7 @@ export const markTicketUsed = (ticketNumber, setUsedModal) => {
 export const markTicketUnused = (ticketNumber, setUnUsedModal) => {
     const config: AxiosRequestConfig = {
         headers: {
-            'Authorization': getBasicAuthHeader(username, password),
+            'Authorization': sessionStorage.getItem('authHeader')
         }
     };
     axios.put(`${apiUrlTickets}/${ticketNumber}/use?used=false`, {}, config)
@@ -74,7 +72,7 @@ export const markTicketUnused = (ticketNumber, setUnUsedModal) => {
 export const sellTicket = (saleData, setSuccesfulSale, setProofOfSaleModal) => {
     const config: AxiosRequestConfig = {
         headers: {
-            'Authorization': getBasicAuthHeader(username, password),
+            'Authorization': sessionStorage.getItem('authHeader')
         }
     };
     axios.post(`${apiUrlSales}`, saleData, config)
