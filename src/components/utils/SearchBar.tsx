@@ -3,6 +3,7 @@ import { Input } from 'reactstrap';
 
 interface SearchBarProps {
     onSearch: (query: string) => void;
+    width?: string;
 }
 
 export default function SearchBar(props: SearchBarProps) {
@@ -14,5 +15,8 @@ export default function SearchBar(props: SearchBarProps) {
         props.onSearch(newQuery);
     };
 
-    return <Input className="w-100" type="search" placeholder="Enter a ticket number..." onChange={handleChange} value={query} />;
+    return <Input
+        className={props.width} type="search"
+        placeholder="Enter a ticket number..."
+        onChange={handleChange} value={query} />;
 }
