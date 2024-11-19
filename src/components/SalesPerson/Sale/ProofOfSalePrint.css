@@ -12,18 +12,36 @@
     }
 
     .print-overlay {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%) scale(1.2);
+        position: relative;
+        margin: 0 auto;
+        transform: none;
         border: none;
         background-color: #fff;
-        width: auto;
+        width: 100%;
+        max-width: 100%;
         height: auto;
-        max-width: 90%;
-        max-height: 90%;
+        padding: 20px;
+        font-size: 1em;
         box-sizing: border-box;
-        padding: 40px;
-        font-size: 1.2em;
+    }
+
+    table {
+        page-break-inside: avoid;
+        width: 100%;
+    }
+
+    th, td {
+        text-align: center;
+        vertical-align: middle;
+        padding: 8px;
+    }
+
+    tr {
+        page-break-inside: avoid;
+    }
+
+    body {
+        margin: 0;
+        padding: 0;
     }
 }
