@@ -2,7 +2,7 @@ import axios from 'axios';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getBasicAuthHeader } from '../../utils/utils';
-import { Alert, Button, Card, CardBody, Col, Container, Form, FormGroup, FormText, Input, Label, Row } from 'reactstrap';
+import { Alert, Button, Card, CardBody, Col, Container, Form, FormFeedback, FormGroup, Input, Label, Row } from 'reactstrap';
 
 const Login = () => {
     const [username, setUsername] = useState("");
@@ -22,12 +22,12 @@ const Login = () => {
         setErrorMessage('');
 
         if (!username) {
-            setUsernameError("Username is required");
+            setUsernameError("Please enter username");
         } else{
             setUsernameError("");
         }
         if (!password) {
-            setPasswordError("Password is required");
+            setPasswordError("Please enter password");
         } else {
             setPasswordError("")
         }
@@ -59,46 +59,48 @@ const Login = () => {
     };
 
     return (
-        <Container className="mt-5">
-            <Row className="justify-content-center">
-                <Col md={6}>
-                    <Card>
+        <Container className="mt-5" style={{}}>
+            <Row className="justify-content-center align-items-center">
+                <Col md={7} style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
+                    <img
+                        src="src/assets/pexels-tdcat-69866.jpg"
+                        alt="Ticketguru login photo"
+                        style={{ maxWidth: "100%", height: "auto", borderRadius: "10px" }}
+                    />
+                </Col>
+                <Col md={4}>   
+                    <Card style={{ border: "none" }}>
+                    <h1 className="text-center" style={{marginBottom:"30px"}}>Welcome to Ticketguru</h1>
                         <CardBody>
                             {errorMessage && (
-                                <Alert color="danger" className="mb-3">
-                                    {errorMessage}
-                                </Alert>
+                                <Alert color="danger" className="mb-3">{errorMessage}</Alert>
                             )}
                             <Form onSubmit={onButtonClick}>
                                 <FormGroup>
-                                    <Label for="exUsername">Username</Label>
+                                    <Label for="exUsername" className="text-start d-block">Username</Label>
                                     <Input
                                         name="username"
                                         id="exUsername"
-                                        placeholder="Enter username"
+                                        invalid={!!usernameError}
                                         value={username}
                                         onChange={(ev) => setUsername(ev.target.value)}
                                     />
-                                    {usernameError && (
-                                        <FormText color="danger">{usernameError}</FormText>
-                                    )}
+                                    <FormFeedback>{usernameError}</FormFeedback>
                                 </FormGroup>
                                 <FormGroup>
-                                    <Label for="exPassword">Password</Label>
+                                    <Label for="exPassword" className="text-start d-block">Password</Label>
                                     <Input
                                         type="password"
                                         name="password"
                                         id="exPassword"
-                                        placeholder="Enter password"
+                                        invalid={!!passwordError}
                                         value={password}
                                         onChange={(ev) => setPassword(ev.target.value)}
                                     />
-                                    {passwordError && (
-                                        <FormText color="danger">{passwordError}</FormText>
-                                    )}
+                                    <FormFeedback>{passwordError}</FormFeedback>
                                 </FormGroup>
-                                <Button type="submit" color="success">
-                                    Login
+                                <Button type="submit" color="success" style={{width:'50%', marginTop:'10px',borderRadius: '25px', background: 'linear-gradient(90deg, #28a745, #218838)', fontWeight: 'bold'}}>
+                                    LOGIN
                                 </Button>
                             </Form>
                         </CardBody>

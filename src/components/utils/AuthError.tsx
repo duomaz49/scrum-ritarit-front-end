@@ -9,8 +9,9 @@ export default function NotFound() {
                 <Col>
                     <h1 className="display-1 text-danger">401</h1>
                     <p className="lead">This account doesn't have the necessary permissions</p>
-                    <Button color="primary" onClick={() => navigate('/user')}>
-                        Back to user view
+                    <p><em>Please proceed to login which the right credentials</em></p>
+                    <Button color="primary" onClick={() => navigate('/')}>
+                        Login
                     </Button>
                 </Col>
             </Row>
