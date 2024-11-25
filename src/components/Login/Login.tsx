@@ -36,15 +36,16 @@ const Login = () => {
         try {
             const authenticationHeader = getBasicAuthHeader(username, password);
 
-            const response = await axios.post('https://ticket-guru-ticketguru-scrum-ritarit.2.rahtiapp.fi/api/login', {
+            const response = await axios.post('http://localhost:8080/api/login', {
                 username: username,
                 password: password,
             });
 
             if (response.status === 200) {
-                sessionStorage.setItem('authHeader', authenticationHeader);
+                localStorage.setItem('authHeader', authenticationHeader);
 
                 const role = response.data.role;
+                localStorage.setItem('role', role);
                 if (role === "ADMIN"){
                     navigate("/admin")
                 } else{
