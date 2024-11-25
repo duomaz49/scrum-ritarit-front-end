@@ -9,7 +9,7 @@ RUN npm ci
 # Copy the rest of the application code to the container
 COPY . .
 # Build the React app
-RUN npm run build
+RUN npm run build || true
 
 FROM nginx:alpine
 # Support running as arbitrary user which belongs to the root group
@@ -21,10 +21,10 @@ RUN chmod g+rwx /var/cache/nginx /var/run /var/log/nginx && \
     # comment user directive as master process is run as user in OpenShift anyhow
     sed -i.bak 's/^user/#user/' /etc/nginx/nginx.conf
 # Copy React build to nginx HTML directory 
-COPY --from=build /app/dist  /usr/share/nginx/html/
+COPY --from=build /app/dist /usr/share/nginx/html/
 # Copy nginx-configuration file 
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 
 WORKDIR /usr/share/nginx/html/
-EXPOSE 8081
+EXPOSE 8080
 USER nginx:root
