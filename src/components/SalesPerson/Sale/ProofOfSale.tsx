@@ -2,7 +2,6 @@ import { Container, Card, CardBody, Button, Table } from 'reactstrap';
 import { formatDate, formatTime } from "../../../utils/date.ts";
 import React from "react";
 import { ISale } from "../../../types/sale.ts";
-import './ProofOfSalePrint.css';
 import { QRCodeSVG } from 'qrcode.react';
 import { IEvent } from '../../../types/event.ts';
 import { IEventTicketType } from '../../../types/eventTicketType.ts';
