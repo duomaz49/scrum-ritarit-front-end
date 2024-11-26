@@ -57,7 +57,7 @@ export default function TicketSale() {
                 toggle={() => setIsProofOfSaleModalOpen(!isProofOfSaleModalOpen)}
                 title="Proof of sale"
             >
-                <ProofOfSale sale={succesfulSale}
+                <ProofOfSale sale={succesfulSale} event={selectedEvent}
                              toggleModal={() => setIsProofOfSaleModalOpen(!isProofOfSaleModalOpen)}/>
             </OverlayComponent>
         </Container>

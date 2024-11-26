@@ -5,6 +5,7 @@ import {ISale} from "../../../types/sale.ts";
 import './ProofOfSalePrint.css';
 import { QRCodeSVG } from 'qrcode.react';
 import { IEvent } from '../../../types/event.ts';
+import { IEventTicketType } from '../../../types/eventTicketType.ts';
 
 interface ProofOfSaleProps {
     sale: ISale;
@@ -13,6 +14,7 @@ interface ProofOfSaleProps {
 }
 
 export default function ProofOfSale(props: ProofOfSaleProps) {
+    const {sale, event, toggleModal} = props
     const [isPrinting, setIsPrinting] = useState(false);
 
     const handlePrint = () => {
@@ -30,6 +32,13 @@ export default function ProofOfSale(props: ProofOfSaleProps) {
             window.onafterprint = null;
         };
     }, []);
+
+    const getTicketTypeName = (ticketTypeId: number): string => {
+        const ticketType = event.eventTicketTypes.find(
+            (type: IEventTicketType) => type.ticketTypeId === ticketTypeId
+        );
+        return (ticketType?.ticketTypeName) || "Ticket Type not found";
+    };
 
     return (
         <Container
@@ -49,39 +58,42 @@ export default function ProofOfSale(props: ProofOfSaleProps) {
                 }}
             >
                 <CardBody className="text-start">
-                    <h5 className="text-center">Transaction - {props.sale.saleId}</h5>
-                    <div>Payment method: {props.sale.paymentMethod}</div>
-                    <div>Total tickets: {props.sale.tickets?.length}</div>
-                    <div>Total Price: {props.sale.totalPrice}</div>
-                    <div>{`Date: ${formatDate(props.sale.saleTimestamp)}`}</div>
-                    <div>{`Time: ${formatTime(props.sale.saleTimestamp)}`}</div>
-                    <h6 className="text-center">Bought Tickets:</h6>
-                    <Table className="mt-2" bordered hover responsive>
-                        <thead>
-                            <tr>
-                                <th className="p-2 text-center align-middle">Qr code</th>
-                                <th className="p-2 text-center align-middle">Ticket price</th>
-                                <th className="p-2 text-center align-middle">Quantity</th>
-                                <th className="p-2 text-center align-middle">Ticket code</th>
-                            </tr>
-                        </thead>
+                    <div className='hide-on-print'>
+                        <h5 className="text-center">Transaction - {props.sale.saleId}</h5>
+                        <div>Payment method: {props.sale.paymentMethod}</div>
+                        <div>Total tickets: {props.sale.tickets?.length}</div>
+                        <div>Total Price: {props.sale.totalPrice}</div>
+                        <div>{`Date: ${formatDate(props.sale.saleTimestamp)}`}</div>
+                        <div>{`Time: ${formatTime(props.sale.saleTimestamp)}`}</div>
+                        <h6 className="text-center">Bought Tickets:</h6>
+                    </div>
+                    <div>
                         {props.sale.tickets?.map((ticket, i) => (
-                            <tbody key={i}>
-                                <tr>
-                                    <td className="p-2 text-center">
-                                        <QRCodeSVG
-                                            value={ticket.ticketNumber || "defaultValue"}
-                                            size={80}
-                                            level="L"
-                                        />
-                                    </td>
-                                    <td className="p-2 text-center align-middle">{ticket.price}</td>
-                                    <td className="p-2 text-center align-middle">{ticket.quantity}</td>
-                                    <td className="p-2 text-center align-middle">{ticket.ticketNumber}</td>
-                                </tr>
-                            </tbody>
+                            <div key={i} className="ticket-item">
+                                <h6 className="p-2 text-center fw-bold">
+                                    {event.eventName} - {'ticketTypeId' in ticket ? getTicketTypeName(ticket.ticketTypeId) : "Not found"}
+                                </h6>
+                                <div className="p-2 text-center">
+                                    <QRCodeSVG value={ticket.ticketNumber || "defaultValue"} size={150} level="L" />
+                                </div>
+                                <p className="p-2 text-center italic">
+                                    {formatDate(event.eventDate)} - {event.location}
+                                </p>
+                                <Table bordered hover responsive>
+                                    <thead>
+                                        <tr>
+                                            <th className="p-2 text-center align-middle">Ticket code</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td className="p-2 text-center align-middle">{ticket.ticketNumber}</td>
+                                        </tr>
+                                    </tbody>
+                                </Table>
+                            </div>
                         ))}
-                    </Table>
+                    </div>
                     <hr className="my-4" />
                     <div className="d-flex justify-content-around mt-4 hide-on-print">
                         <Button color="danger" onClick={props.toggleModal}>
