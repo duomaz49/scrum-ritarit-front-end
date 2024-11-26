@@ -5,6 +5,7 @@ import { getBasicAuthHeader } from "./utils";
 const apiUrlTickets = `${BASE_URL_LOCALHOST}${ENDPOINTS.TICKETS}`;
 const apiUrlEvents = `${BASE_URL_LOCALHOST}${ENDPOINTS.EVENTS}`;
 const apiUrlSales = `${BASE_URL_LOCALHOST}${ENDPOINTS.SALES}`;
+const apiUrlPaymentMethods = `${BASE_URL_LOCALHOST}${ENDPOINTS.PAYMENT_METHODS}`;
 
 export const getEvents = (setEvents) => {
     const config: AxiosRequestConfig = {
@@ -85,5 +86,21 @@ export const sellTicket = (saleData, setSuccesfulSale, setProofOfSaleModal) => {
         .catch(error => {
             console.error("Error selling ticket:", error);
             alert("Error selling ticket, please try again.");
+        });
+}
+
+export const getPaymentMethods = (setPaymentMethods) => {
+    const config: AxiosRequestConfig = {
+        headers: {
+            'Authorization': localStorage.getItem('authHeader')
+        }
+    };
+    axios.get(`${apiUrlPaymentMethods}`, config)
+        .then(response => {
+            setPaymentMethods(response.data);
+        })
+        .catch(error => {
+            alert("No payment methods found! Please contact the administrator.");
+            console.error("Error fetching tickets:", error);
         });
 }

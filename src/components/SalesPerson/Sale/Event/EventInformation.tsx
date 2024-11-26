@@ -1,10 +1,12 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Container, Card, CardBody, Table, Button, Input, Label, FormGroup} from 'reactstrap';
 import {IEvent} from "../../../../types/event.ts";
 import {formatDate, formatTime} from "../../../../utils/date.ts";
 import {faCreditCard} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {IEventTicketType} from "../../../../types/eventTicketType.ts";
+import {getPaymentMethods} from "../../../../utils/api.ts";
+import {IPaymentMethod} from "../../../../types/paymentMethod.ts";
 
 interface EventsInformationProps {
     event: IEvent;
@@ -13,17 +15,23 @@ interface EventsInformationProps {
 
 export default function EventsInformation(props: EventsInformationProps) {
     const [selectedTicketType, setSelectedTicketType] = useState<IEventTicketType | null>(null);
+    const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<IPaymentMethod>(null);
     const [quantity, setQuantity] = useState<number>(1);
-    const [paymentMethod, setPaymentMethod] = useState<string>('Credit Card');
+    const [paymentMethods, setPaymentMethods] = useState<IPaymentMethod[] | null>(null);
+
+    useEffect(() => {
+        getPaymentMethods(setPaymentMethods)
+    }, []);
+
     const handleConfirmBuy = (eventTicketType: IEventTicketType) => {
         setSelectedTicketType(eventTicketType);
-    };
+    }
 
     const handleSubmit = () => {
         if (selectedTicketType) {
             const saleData = {
-                userId: 1,
-                paymentMethod: paymentMethod,
+                userId: Number(localStorage.getItem('userId')),
+                paymentMethodId: selectedPaymentMethod.id,
                 tickets: [
                     {
                         eventId: selectedTicketType.eventId,
@@ -66,7 +74,7 @@ export default function EventsInformation(props: EventsInformationProps) {
                                             color="success"
                                             onClick={() => handleConfirmBuy(obj)}
                                         >
-                                            <FontAwesomeIcon icon={faCreditCard} />
+                                            <FontAwesomeIcon icon={faCreditCard}/>
                                         </Button>
                                     </td>
                                 </tr>
@@ -91,18 +99,19 @@ export default function EventsInformation(props: EventsInformationProps) {
                                 onChange={(e) => setQuantity(Number(e.target.value))}
                             />
                         </FormGroup>
-                        <FormGroup>
-                            <Label for="paymentMethod">Payment Method</Label>
-                            <Input
-                                type="select"
-                                id="paymentMethod"
-                                value={paymentMethod}
-                                onChange={(e) => setPaymentMethod(e.target.value)}
-                            >
-                                <option value="Credit Card">Credit Card</option>
-                                <option value="Cash">Cash</option>
-                            </Input>
-                        </FormGroup>
+                        {paymentMethods.map((paymentMethod) => (
+                            <FormGroup key={paymentMethod.id} check>
+                                <Label check>
+                                    <Input
+                                        type="radio"
+                                        name="paymentMethod"
+                                        value={paymentMethod.name}
+                                        onChange={(e) => setSelectedPaymentMethod(paymentMethod)}
+                                    />
+                                    {paymentMethod.name}
+                                </Label>
+                            </FormGroup>
+                        ))}
                         <div className="d-flex justify-content-around mt-4">
                             <Button id="modal-cancel" color="danger" onClick={() => setSelectedTicketType(null)}>
                                 Back

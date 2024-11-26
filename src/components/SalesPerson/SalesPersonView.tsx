@@ -3,8 +3,6 @@ import {Button, Card, CardBody, Container} from "reactstrap";
 import {useNavigate} from "react-router-dom";
 import { logoutTicketguru } from "../../utils/utils";
 
-// TODO: Add link to the button for routes
-
 export default function SalesPersonView() {
     const navigate = useNavigate();
     return (
