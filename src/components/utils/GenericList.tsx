@@ -18,7 +18,7 @@ export default function GenericList<T>(props: GenericListProps<T>) {
     return (
         <div className="w-100 card-no-border">
             <h6 className="text-center mt-4 mb-4">{props.title}</h6>
-            <ListGroup className={props.listAsRowClassName}>
+            <ListGroup className={props.listAsRowClassName} style={{ maxHeight: '400px', overflowY: 'auto' }}>
                 {props.items.map((item, index) => (
                     !props.isAdmin ? (
                         <Button
