@@ -1,12 +1,11 @@
-import { Container, Card, CardBody, Button, Table } from 'reactstrap';
+import { Container, Card, CardBody, Button } from 'reactstrap';
 import { formatDate, formatTime } from "../../../utils/date.ts";
-import React from "react";
 import { ISale } from "../../../types/sale.ts";
-import { QRCodeSVG } from 'qrcode.react';
 import { IEvent } from '../../../types/event.ts';
 import { IEventTicketType } from '../../../types/eventTicketType.ts';
 import jsPDF from 'jspdf';
 import QRCode from 'qrcode';
+import TicketCarousel from '../Ticket/TicketCarousel.tsx';
 
 interface ProofOfSaleProps {
     sale: ISale;
@@ -94,31 +93,7 @@ export default function ProofOfSale(props: ProofOfSaleProps) {
                         <div>{`Time: ${formatTime(props.sale.saleTimestamp)}`}</div>
                         <h6 className="text-center">Bought Tickets:</h6>
                     </div>
-                    <div className="tickets-container mt-4">
-                        {sale.tickets?.map((ticket, i) => (
-                            <div key={i} className="ticket-item" style={{ marginBottom: '20px', padding: '15px', border: '1px solid #ccc', borderRadius: '10px' }}>
-                                <div className="ticket-content text-center">
-                                    <h6 className="fw-bold">{event.eventName} - {getTicketTypeName(ticket.ticketTypeId)}</h6>
-                                    <div className="p-3">
-                                        <QRCodeSVG value={ticket.ticketNumber || "defaultValue"} size={150} level="L" />
-                                    </div>
-                                    <p className="italic">{formatDate(event.eventDate)} - {event.location}</p>
-                                    <Table bordered responsive className="mt-3">
-                                        <thead>
-                                            <tr>
-                                                <th className="p-2 text-center align-middle">Ticket code</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td className="p-2 text-center align-middle">{ticket.ticketNumber}</td>
-                                            </tr>
-                                        </tbody>
-                                    </Table>
-                                </div>
-                            </div>
-                        ))}
-                    </div>
+                    <TicketCarousel sale={sale} event={event} />
                 </CardBody>
             </Card>
             <div className="d-flex justify-content-around mt-4" style={{gap:'50px'}}>
