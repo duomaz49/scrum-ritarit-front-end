@@ -1,11 +1,12 @@
-import axios, { AxiosRequestConfig } from "axios";
+import axios, {AxiosRequestConfig} from "axios";
 import {BASE_URL, BASE_URL_LOCALHOST, ENDPOINTS} from './constants';
-import { getBasicAuthHeader } from "./utils";
+import {getBasicAuthHeader} from "./utils";
 
 const apiUrlTickets = `${BASE_URL_LOCALHOST}${ENDPOINTS.TICKETS}`;
 const apiUrlEvents = `${BASE_URL_LOCALHOST}${ENDPOINTS.EVENTS}`;
 const apiUrlSales = `${BASE_URL_LOCALHOST}${ENDPOINTS.SALES}`;
 const apiUrlPaymentMethods = `${BASE_URL_LOCALHOST}${ENDPOINTS.PAYMENT_METHODS}`;
+const apiUrlTicketTypes = `${BASE_URL_LOCALHOST}${ENDPOINTS.TICKET_TYPES}`;
 
 export const getEvents = (setEvents) => {
     const config: AxiosRequestConfig = {
@@ -81,7 +82,7 @@ export const sellTicket = (saleData, setSuccesfulSale, setProofOfSaleModal) => {
             setSuccesfulSale(response.data);
             setTimeout(() => {
                 setProofOfSaleModal(true);
-            },500);
+            }, 500);
         })
         .catch(error => {
             console.error("Error selling ticket:", error);
@@ -101,6 +102,41 @@ export const getPaymentMethods = (setPaymentMethods) => {
         })
         .catch(error => {
             alert("No payment methods found! Please contact the administrator.");
-            console.error("Error fetching tickets:", error);
+            console.error("Error fetching payment methods:", error);
+        });
+}
+
+export const getTicketTypes = (setTicketTypes) => {
+    const config: AxiosRequestConfig = {
+        headers: {
+            'Authorization': localStorage.getItem('authHeader')
+        }
+    };
+    axios.get(`${apiUrlTicketTypes}`, config)
+        .then(response => {
+            setTicketTypes(response.data);
+        })
+        .catch(error => {
+            alert("No ticket types found! Please contact the administrator.");
+            console.error("Error fetching ticket types:", error);
+        });
+}
+
+export const createEvent = (eventData, toggleEventModal) => {
+    const config: AxiosRequestConfig = {
+        headers: {
+            'Authorization': localStorage.getItem('authHeader')
+        }
+    };
+    axios.post(`${apiUrlEvents}`, eventData, config)
+        .then(response => {
+            console.log("Event created:", response.data);
+            setTimeout(() => {
+                toggleEventModal();
+            }, 500);
+        })
+        .catch(error => {
+            console.error("Error creating event:", error);
+            alert("Error creating event, please try again.");
         });
 }

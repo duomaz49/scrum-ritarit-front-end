@@ -8,5 +8,6 @@ export const ENDPOINTS = {
     SALES: '/sales',
     USERS: '/users',
     LOGIN: '/login',
-    PAYMENT_METHODS: '/paymentmethods'
+    PAYMENT_METHODS: '/paymentmethods',
+    TICKET_TYPES: '/ticket-types',
 };

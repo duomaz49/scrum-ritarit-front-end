@@ -2,25 +2,30 @@ import React, {useEffect, useState} from "react";
 import {Button, Form, FormGroup, Label, Input} from 'reactstrap';
 import {IEvent} from "../../../types/event.ts";
 import moment from "moment/moment";
+import EventTicketTypeAccordion from "./EventTicketTypeAccordion.tsx";
+import {ITicketType} from "../../../types/ticketType.ts";
+import {createEvent, getTicketTypes} from "../../../utils/api.ts";
 
 interface CreateOrEditEventFormProps {
     eventToEdit?: IEvent;
-    onSubmit: (event: IEvent) => void;
     toggleModal: () => void;
 }
 
-// TODO: Pitäisikö liiptyypit joko luoda erillään tai olla valmiiksi tietokantaan luotuna?
-
 export default function CreateOrEditEventForm(props: CreateOrEditEventFormProps) {
+    const [ticketTypes, setTicketTypes] = useState<ITicketType[]>([]);
+    const [selectedTicketTypes, setSelectedTicketTypes] = useState<object[]>([]);
     const [event, setEvent] = useState<IEvent>({
         eventName: "",
         eventDate: moment().format("YYYY-MM-DD"),
         location: "",
         totalTickets: 0,
         availableTickets: 0,
-        eventTicketTypes: [],
         ...props.eventToEdit,
     });
+
+    useEffect(() => {
+        getTicketTypes(setTicketTypes);
+    }, []);
 
     useEffect(() => {
         if (props.eventToEdit) {
@@ -31,10 +36,25 @@ export default function CreateOrEditEventForm(props: CreateOrEditEventFormProps)
         }
     }, [props.eventToEdit]);
 
+    const onSubmit = (e) => {
+        const eventTicketTypes = selectedTicketTypes.map(({ ticketTypeId, price, ticketQuantity }) => ({
+            ticketTypeId: Number(ticketTypeId),
+            price: Number(price),
+            ticketQuantity: Number(ticketQuantity),
+        }));
+
+        const eventData = {
+            userId: localStorage.getItem('userId'),
+            eventTicketTypes,
+            ...event,
+        };
+        e.preventDefault();
+        createEvent(eventData, props.toggleModal);
+    }
+
 
     return (
-        <Form onSubmit={() => {
-        }}>
+        <Form onSubmit={onSubmit}>
             <FormGroup className="mb-1 px-2 text-start">
                 <Label for="name" className="form-label p-1">
                     Event Name
@@ -100,6 +120,7 @@ export default function CreateOrEditEventForm(props: CreateOrEditEventFormProps)
                     onChange={(e) => setEvent({...event, availableTickets: parseInt(e.target.value)})}
                 />
             </FormGroup>
+            <EventTicketTypeAccordion ticketTypes={ticketTypes} selectedTicketTypes={selectedTicketTypes} setSelectedTicketTypes={setSelectedTicketTypes}/>
             <hr className="my-4"/>
             <div className="d-flex justify-content-around mt-4">
                 <Button color="danger" onClick={props.toggleModal}>

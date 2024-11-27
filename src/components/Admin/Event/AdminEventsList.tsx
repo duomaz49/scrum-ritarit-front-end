@@ -59,7 +59,7 @@ export default function AdminEventsList() {
                 toggle={() => setIsEditEventModalOpen(!isEditEventModalOpen)}
                 title='Edit event'
             >
-                <CreateOrEditEventForm eventToEdit={selectedEvent} toggleModal={() => setIsEditEventModalOpen(!isEditEventModalOpen)}  onSubmit={() => {}}/>
+                <CreateOrEditEventForm eventToEdit={selectedEvent} toggleModal={() => setIsEditEventModalOpen(!isEditEventModalOpen)}/>
             </OverlayComponent>
             <OverlayComponent
                 isOpen={isDeleteEventModalOpen}
