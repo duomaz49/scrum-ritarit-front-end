@@ -52,11 +52,12 @@ export default function CreateOrEditEventForm(props: CreateOrEditEventFormProps)
             price: Number(price),
             ticketQuantity: Number(ticketQuantity),
         }));
+        console.log("Before Api", eventTicketTypes);
         const eventData = {
+            ...event,
             eventId: props.eventToEdit?.eventId ?? null,
             userId: localStorage.getItem('userId'),
             eventTicketTypes,
-            ...event,
         };
         e.preventDefault();
         if (props.eventToEdit) {

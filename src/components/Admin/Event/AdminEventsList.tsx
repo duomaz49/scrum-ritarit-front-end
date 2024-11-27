@@ -78,7 +78,7 @@ export default function AdminEventsList(props: AdminEventsListProps) {
                 buttonClassName={"p-4 mb-2 m-1 text-start"}
                 listAsRowClassName={"d-flex overflow-auto p-0"}
                 buttonColor="success"
-                title="All upcoming Events"
+                title="All Events"
             />
             <OverlayComponent
                 isOpen={isEventModalOpen}

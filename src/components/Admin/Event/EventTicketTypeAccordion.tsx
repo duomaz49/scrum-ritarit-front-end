@@ -40,7 +40,9 @@ export default function EventTicketTypeAccordion(props: EventTicketTypeAccordion
     };
 
     const deleteAccordion = (id: string) => {
-        setSelectedTicketTypes(selectedTicketTypes.filter((accordion) => accordion.id !== id));
+        setSelectedTicketTypes(selectedTicketTypes.filter((accordion) => {
+            return accordion.id !== id && accordion.ticketTypeId !== id;
+        }));
         if (id === open) {
             setOpen('');
         }
@@ -97,7 +99,7 @@ export default function EventTicketTypeAccordion(props: EventTicketTypeAccordion
                                 <div
                                     className="btn btn-outline-danger btn-sm ms-3"
                                     role="button"
-                                    onClick={() => deleteAccordion(accordion.id)}
+                                    onClick={() => deleteAccordion(accordion.id ?? accordion.ticketTypeId.toString())}
                                     style={{cursor: 'pointer'}}
                                 >
                                     <FontAwesomeIcon icon={faTrash}/>
