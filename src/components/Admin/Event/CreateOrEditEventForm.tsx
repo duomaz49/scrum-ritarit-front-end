@@ -52,7 +52,7 @@ export default function CreateOrEditEventForm(props: CreateOrEditEventFormProps)
             price: Number(price),
             ticketQuantity: Number(ticketQuantity),
         }));
-        console.log("Before Api", eventTicketTypes);
+
         const eventData = {
             ...event,
             eventId: props.eventToEdit?.eventId ?? null,
@@ -134,8 +134,11 @@ export default function CreateOrEditEventForm(props: CreateOrEditEventFormProps)
                     onChange={(e) => setEvent({...event, availableTickets: parseInt(e.target.value)})}
                 />
             </FormGroup>
-            <EventTicketTypeAccordion ticketTypes={ticketTypes} selectedTicketTypes={selectedTicketTypes}
-                                      setSelectedTicketTypes={setSelectedTicketTypes}/>
+            <EventTicketTypeAccordion
+                create={!props.eventToEdit}
+                ticketTypes={ticketTypes}
+                selectedTicketTypes={selectedTicketTypes}
+                setSelectedTicketTypes={setSelectedTicketTypes}/>
             <hr className="my-4"/>
             <div className="d-flex justify-content-around mt-4">
                 <Button color="danger" onClick={props.toggleModal}>

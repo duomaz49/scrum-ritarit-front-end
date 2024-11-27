@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import {
     Accordion,
     AccordionBody,
@@ -9,19 +9,19 @@ import {
     Input,
     Label,
 } from 'reactstrap';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrash } from '@fortawesome/free-solid-svg-icons';
-import { ITicketType } from '../../../types/ticketType';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {faTrash} from '@fortawesome/free-solid-svg-icons';
+import {ITicketType} from '../../../types/ticketType';
 
 interface EventTicketTypeAccordionProps {
     selectedTicketTypes: object[];
     setSelectedTicketTypes: (selectedTicketTypes: object[]) => void;
     ticketTypes: ITicketType[];
-
+    create: boolean;
 }
 
 export default function EventTicketTypeAccordion(props: EventTicketTypeAccordionProps) {
-    const { selectedTicketTypes, setSelectedTicketTypes, ticketTypes } = props;
+    const {selectedTicketTypes, setSelectedTicketTypes, ticketTypes, create} = props;
     const [open, setOpen] = useState<string>('');
 
     const toggleAccordion = (id: string) => {
@@ -52,7 +52,7 @@ export default function EventTicketTypeAccordion(props: EventTicketTypeAccordion
         setSelectedTicketTypes(
             selectedTicketTypes.map((accordion) =>
                 accordion.id === id
-                    ? { ...accordion, ticketTypeId: value }
+                    ? {...accordion, ticketTypeId: value}
                     : accordion
             )
         );
@@ -62,7 +62,7 @@ export default function EventTicketTypeAccordion(props: EventTicketTypeAccordion
         setSelectedTicketTypes(
             selectedTicketTypes.map((accordion) =>
                 accordion.id === id
-                    ? { ...accordion, price: value }
+                    ? {...accordion, price: value}
                     : accordion
             )
         );
@@ -72,7 +72,7 @@ export default function EventTicketTypeAccordion(props: EventTicketTypeAccordion
         setSelectedTicketTypes(
             selectedTicketTypes.map((accordion) =>
                 accordion.id === id
-                    ? { ...accordion, ticketQuantity: value }
+                    ? {...accordion, ticketQuantity: value}
                     : accordion
             )
         );
@@ -87,23 +87,23 @@ export default function EventTicketTypeAccordion(props: EventTicketTypeAccordion
 
     return (
         <div>
-            <Button color="success" outline block className="mb-2" onClick={addAccordion}>
+            {create && <Button color="success" outline block className="mb-2" onClick={addAccordion}>
                 Add Ticket Type
-            </Button>
+            </Button>}
             <Accordion open={open} toggle={toggleAccordion}>
                 {selectedTicketTypes.map((accordion, index) => (
                     <AccordionItem key={accordion.id ?? accordion.ticketTypeId}>
                         <AccordionHeader targetId={accordion.id ?? accordion.ticketTypeId}>
                             <div className="d-flex justify-content-between align-items-center w-100 me-3">
                                 <span>Type: {getTicketTypeName(accordion.ticketTypeId)}, Price: {accordion.price}€,  Quantity: {accordion.ticketQuantity}pcs</span>
-                                <div
+                                {create && <div
                                     className="btn btn-outline-danger btn-sm ms-3"
                                     role="button"
                                     onClick={() => deleteAccordion(accordion.id ?? accordion.ticketTypeId.toString())}
                                     style={{cursor: 'pointer'}}
                                 >
                                     <FontAwesomeIcon icon={faTrash}/>
-                                </div>
+                                </div>}
                             </div>
                         </AccordionHeader>
                         <AccordionBody accordionId={accordion.id ?? accordion.ticketTypeId}>
@@ -112,6 +112,7 @@ export default function EventTicketTypeAccordion(props: EventTicketTypeAccordion
                                     type="select"
                                     id={`ticketType-${accordion.id ?? accordion.ticketTypeId}`}
                                     value={accordion.ticketTypeId}
+                                    disabled={!create}
                                     onChange={(e) =>
                                         handleTicketTypeChange(accordion.id, e.target.value)
                                     }
@@ -133,6 +134,7 @@ export default function EventTicketTypeAccordion(props: EventTicketTypeAccordion
                                     id="price"
                                     value={accordion.price}
                                     placeholder='Price'
+                                    disabled={!create}
                                     onChange={(e) =>
                                         handlePriceChange(accordion.id, e.target.value)
                                     }
@@ -140,12 +142,12 @@ export default function EventTicketTypeAccordion(props: EventTicketTypeAccordion
                                 />
                             </FormGroup>
                             <FormGroup className="mb-1 px-2 text-start">
-
                                 <Input
                                     type="number"
                                     id="quantity"
                                     value={accordion.ticketQuantity}
                                     placeholder='Quantity'
+                                    disabled={!create}
                                     onChange={(e) =>
                                         handleQuantityChange(accordion.id, e.target.value)
                                     }
