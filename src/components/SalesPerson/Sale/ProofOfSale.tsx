@@ -86,7 +86,7 @@ export default function ProofOfSale(props: ProofOfSaleProps) {
                 <CardBody className="text-start">
                     <div className='hide-on-print'>
                         <h5 className="text-center">Transaction - {props.sale.saleId}</h5>
-                        <div>Payment method: {props.sale.paymentMethod}</div>
+                        <div>Payment method: {props.sale.paymentMethodId}</div>
                         <div>Total tickets: {props.sale.tickets?.length}</div>
                         <div>Total Price: {props.sale.totalPrice}</div>
                         <div>{`Date: ${formatDate(props.sale.saleTimestamp)}`}</div>
