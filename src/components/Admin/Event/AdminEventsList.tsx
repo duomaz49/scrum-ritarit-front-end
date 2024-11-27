@@ -1,15 +1,19 @@
 import React, {useEffect, useState} from 'react'
-import EventsList from "./../../SalesPerson/Sale/Event/EventsList.tsx";
 import {IEvent} from "../../../types/event.ts";
-import {getEvents} from "../../../utils/api.ts";
+import {deleteEvent, getEvents} from "../../../utils/api.ts";
 import GenericList from "../../utils/GenericList.tsx";
 import OverlayComponent from "../../utils/Overlay.tsx";
 import CreateOrEditEventForm from "./CreateOrEditEventForm.tsx";
 import DeleteConfirmation from "../../utils/DeleteConfirmation.tsx";
 
+interface AdminEventsListProps {
+    shouldReFetch: boolean;
+    setShouldReFetch: (shouldReFetch: boolean) => void;
+}
 
-export default function AdminEventsList() {
-    const [isEditEventModalOpen, setIsEditEventModalOpen] = useState<boolean>(false);
+export default function AdminEventsList(props: AdminEventsListProps) {
+    const {shouldReFetch, setShouldReFetch} = props;
+    const [isEventModalOpen, setIsEventModalOpen] = useState<boolean>(false);
     const [isDeleteEventModalOpen, setIsDeleteEventModalOpen] = useState<boolean>(false);
     const [isEventInfoModalOpen, setIsEventInfoModalOpen] = useState<boolean>(false);
 
@@ -20,19 +24,40 @@ export default function AdminEventsList() {
         getEvents(setEvents);
     }, []);
 
+    useEffect(() => {
+        if (shouldReFetch) {
+            getEvents(setEvents);
+            setShouldReFetch(false);
+        }
+    }, [shouldReFetch]);
+
+    const toggleDeleteEventModal = () => {
+        setShouldReFetch(true);
+        setIsDeleteEventModalOpen(!isDeleteEventModalOpen);
+    }
+
+    const toggleEventModal = () => {
+        setShouldReFetch(true);
+        setIsEventModalOpen(!isEventModalOpen);
+    }
+
+    const triggerDeleteEvent = () => {
+        deleteEvent(selectedEvent.eventId, toggleDeleteEventModal)
+    }
+
     const handleEventClick = (event: IEvent, action: 'edit' | 'delete' | 'view') => {
         if (action === 'edit') {
             setSelectedEvent(event);
-            setIsEditEventModalOpen(true);
+            setIsEventModalOpen(true);
         }
         if (action === 'delete') {
             setSelectedEvent(event);
             setIsDeleteEventModalOpen(true);
-            }
+        }
 
-         if (action === 'info') {
-             setSelectedEvent(event);
-             setIsEventInfoModalOpen(true);
+        if (action === 'info') {
+            setSelectedEvent(event);
+            setIsEventInfoModalOpen(true);
         }
 
     };
@@ -46,6 +71,7 @@ export default function AdminEventsList() {
                     <>
                         <div>Event: {event.eventName}</div>
                         <div>Total Tickets: {event.totalTickets}</div>
+                        <div>Available Tickets: {event.availableTickets}</div>
                     </>
                 )}
                 onItemClick={handleEventClick}
@@ -55,22 +81,28 @@ export default function AdminEventsList() {
                 title="All upcoming Events"
             />
             <OverlayComponent
-                isOpen={isEditEventModalOpen}
-                toggle={() => setIsEditEventModalOpen(!isEditEventModalOpen)}
+                isOpen={isEventModalOpen}
+                toggle={toggleEventModal}
                 title='Edit event'
             >
-                <CreateOrEditEventForm eventToEdit={selectedEvent} toggleModal={() => setIsEditEventModalOpen(!isEditEventModalOpen)}/>
+                <CreateOrEditEventForm
+                    eventToEdit={selectedEvent}
+                    toggleModal={toggleEventModal}
+                    setEvents={setEvents}
+                    setEvent={setSelectedEvent}
+                />
             </OverlayComponent>
             <OverlayComponent
                 isOpen={isDeleteEventModalOpen}
-                toggle={() => setIsDeleteEventModalOpen(!isDeleteEventModalOpen)}
+                toggle={toggleDeleteEventModal}
                 title='Delete event'
             >
                 <DeleteConfirmation
                     message="Click Yes to delete the event"
-                    confirmText="Yes" cancelText="No"
-                    onConfirm={() => {}}
-                    onCancel={() => setIsDeleteEventModalOpen(!isDeleteEventModalOpen)}/>
+                    confirmText="Yes"
+                    cancelText="No"
+                    onConfirm={triggerDeleteEvent}
+                    onCancel={toggleDeleteEventModal}/>
             </OverlayComponent>
         </>
 

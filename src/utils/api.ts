@@ -130,7 +130,6 @@ export const createEvent = (eventData, toggleEventModal) => {
     };
     axios.post(`${apiUrlEvents}`, eventData, config)
         .then(response => {
-            console.log("Event created:", response.data);
             setTimeout(() => {
                 toggleEventModal();
             }, 500);
@@ -138,5 +137,41 @@ export const createEvent = (eventData, toggleEventModal) => {
         .catch(error => {
             console.error("Error creating event:", error);
             alert("Error creating event, please try again.");
+        });
+}
+
+export const editEvent = (eventData, toggleEventModal) => {
+    const config: AxiosRequestConfig = {
+        headers: {
+            'Authorization': localStorage.getItem('authHeader')
+        }
+    };
+    axios.put(`${apiUrlEvents}/${eventData.eventId}`, eventData, config)
+        .then(response => {
+            setTimeout(() => {
+                toggleEventModal();
+            }, 500);
+        })
+        .catch(error => {
+            console.error("Error editing event:", error);
+            alert("Error editing event, please try again.");
+        });
+}
+
+export const deleteEvent = (eventId, toggleDeleteModal) => {
+    const config: AxiosRequestConfig = {
+        headers: {
+            'Authorization': localStorage.getItem('authHeader')
+        }
+    };
+    axios.delete(`${apiUrlEvents}/${eventId}`, config)
+        .then(response => {
+            setTimeout(() => {
+                toggleDeleteModal();
+            }, 500);
+        })
+        .catch(error => {
+            console.error("Error deleting event:", error);
+            alert("Error deleting event, please try again.");
         });
 }

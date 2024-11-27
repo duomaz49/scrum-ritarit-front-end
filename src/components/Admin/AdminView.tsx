@@ -12,8 +12,13 @@ import {useNavigate} from "react-router-dom";
 
 export default function AdminView() {
     const [isCreateEventModalOpen, setIsCreateEventModalOpen] = useState<boolean>(false);
-
+    const [shouldReFetch, setShouldReFetch] = useState<boolean>(false);
     const navigate = useNavigate();
+
+    const toggleCreateEventModal = () => {
+        setShouldReFetch(true);
+        setIsCreateEventModalOpen(!isCreateEventModalOpen);
+    }
 
     return (
         <Container className="d-flex justify-content-center mt-4">
@@ -26,7 +31,7 @@ export default function AdminView() {
                     </Button>
                     <Button color="danger" block className="mb-2" onClick={() => logoutTicketguru(navigate)}>Log Out</Button>
                     <hr className="my-4"/>
-                    <AdminEventsList/>
+                    <AdminEventsList shouldReFetch={shouldReFetch} setShouldReFetch={setShouldReFetch}/>
                 </CardBody>
             </Card>
             <OverlayComponent
@@ -34,7 +39,7 @@ export default function AdminView() {
                 toggle={() => setIsCreateEventModalOpen(!isCreateEventModalOpen)}
                 title='Create event'
             >
-                <CreateOrEditEventForm toggleModal={() => setIsCreateEventModalOpen(!isCreateEventModalOpen)} onSubmit={() => {}}/>
+                <CreateOrEditEventForm toggleModal={toggleCreateEventModal}/>
             </OverlayComponent>
         </Container>
     );

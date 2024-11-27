@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import {
     Accordion,
     AccordionBody,
@@ -22,7 +22,7 @@ interface EventTicketTypeAccordionProps {
 
 export default function EventTicketTypeAccordion(props: EventTicketTypeAccordionProps) {
     const { selectedTicketTypes, setSelectedTicketTypes, ticketTypes } = props;
-    const [open, setOpen] = useState<string>('1');
+    const [open, setOpen] = useState<string>('');
 
     const toggleAccordion = (id: string) => {
         setOpen(id === open ? '' : id);
@@ -90,8 +90,8 @@ export default function EventTicketTypeAccordion(props: EventTicketTypeAccordion
             </Button>
             <Accordion open={open} toggle={toggleAccordion}>
                 {selectedTicketTypes.map((accordion, index) => (
-                    <AccordionItem key={accordion.id}>
-                        <AccordionHeader targetId={accordion.id}>
+                    <AccordionItem key={accordion.id ?? accordion.ticketTypeId}>
+                        <AccordionHeader targetId={accordion.id ?? accordion.ticketTypeId}>
                             <div className="d-flex justify-content-between align-items-center w-100 me-3">
                                 <span>Type: {getTicketTypeName(accordion.ticketTypeId)}, Price: {accordion.price}€,  Quantity: {accordion.ticketQuantity}pcs</span>
                                 <div
@@ -104,11 +104,11 @@ export default function EventTicketTypeAccordion(props: EventTicketTypeAccordion
                                 </div>
                             </div>
                         </AccordionHeader>
-                        <AccordionBody accordionId={accordion.id}>
+                        <AccordionBody accordionId={accordion.id ?? accordion.ticketTypeId}>
                             <FormGroup className="mb-1 px-2 text-start">
                                 <Input
                                     type="select"
-                                    id={`ticketType-${accordion.id}`}
+                                    id={`ticketType-${accordion.id ?? accordion.ticketTypeId}`}
                                     value={accordion.ticketTypeId}
                                     onChange={(e) =>
                                         handleTicketTypeChange(accordion.id, e.target.value)
