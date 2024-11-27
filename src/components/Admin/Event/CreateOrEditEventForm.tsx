@@ -17,7 +17,7 @@ export default function CreateOrEditEventForm(props: CreateOrEditEventFormProps)
     const [selectedTicketTypes, setSelectedTicketTypes] = useState<object[]>([]);
     const [event, setEvent] = useState<IEvent>({
         eventName: "",
-        eventDate: moment().format("YYYY-MM-DD"),
+        eventDate: moment().add(1,'days').format("YYYY-MM-DD"),
         location: "",
         totalTickets: 0,
         availableTickets: 0,
