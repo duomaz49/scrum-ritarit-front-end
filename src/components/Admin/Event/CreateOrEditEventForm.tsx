@@ -56,7 +56,7 @@ export default function CreateOrEditEventForm(props: CreateOrEditEventFormProps)
         const eventData = {
             ...event,
             eventId: props.eventToEdit?.eventId ?? null,
-            userId: localStorage.getItem('userId'),
+            userId: sessionStorage.getItem('userId'),
             eventTicketTypes,
         };
         e.preventDefault();

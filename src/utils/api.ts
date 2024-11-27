@@ -1,12 +1,11 @@
 import axios, {AxiosRequestConfig} from "axios";
 import {BASE_URL, BASE_URL_LOCALHOST, ENDPOINTS} from './constants';
-import {getBasicAuthHeader} from "./utils";
 
-const apiUrlTickets = `${BASE_URL_LOCALHOST}${ENDPOINTS.TICKETS}`;
-const apiUrlEvents = `${BASE_URL_LOCALHOST}${ENDPOINTS.EVENTS}`;
-const apiUrlSales = `${BASE_URL_LOCALHOST}${ENDPOINTS.SALES}`;
-const apiUrlPaymentMethods = `${BASE_URL_LOCALHOST}${ENDPOINTS.PAYMENT_METHODS}`;
-const apiUrlTicketTypes = `${BASE_URL_LOCALHOST}${ENDPOINTS.TICKET_TYPES}`;
+const apiUrlTickets = `${BASE_URL}${ENDPOINTS.TICKETS}`;
+const apiUrlEvents = `${BASE_URL}${ENDPOINTS.EVENTS}`;
+const apiUrlSales = `${BASE_URL}${ENDPOINTS.SALES}`;
+const apiUrlPaymentMethods = `${BASE_URL}${ENDPOINTS.PAYMENT_METHODS}`;
+const apiUrlTicketTypes = `${BASE_URL}${ENDPOINTS.TICKET_TYPES}`;
 
 export const getEvents = (setEvents) => {
     const config: AxiosRequestConfig = {
@@ -109,7 +108,7 @@ export const getPaymentMethods = (setPaymentMethods) => {
 export const getTicketTypes = (setTicketTypes) => {
     const config: AxiosRequestConfig = {
         headers: {
-            'Authorization': localStorage.getItem('authHeader')
+            'Authorization': sessionStorage.getItem('authHeader')
         }
     };
     axios.get(`${apiUrlTicketTypes}`, config)
@@ -125,7 +124,7 @@ export const getTicketTypes = (setTicketTypes) => {
 export const createEvent = (eventData, toggleEventModal) => {
     const config: AxiosRequestConfig = {
         headers: {
-            'Authorization': localStorage.getItem('authHeader')
+            'Authorization': sessionStorage.getItem('authHeader')
         }
     };
     axios.post(`${apiUrlEvents}`, eventData, config)
@@ -143,7 +142,7 @@ export const createEvent = (eventData, toggleEventModal) => {
 export const editEvent = (eventData, toggleEventModal) => {
     const config: AxiosRequestConfig = {
         headers: {
-            'Authorization': localStorage.getItem('authHeader')
+            'Authorization': sessionStorage.getItem('authHeader')
         }
     };
     axios.put(`${apiUrlEvents}/${eventData.eventId}`, eventData, config)
@@ -161,7 +160,7 @@ export const editEvent = (eventData, toggleEventModal) => {
 export const deleteEvent = (eventId, toggleDeleteModal) => {
     const config: AxiosRequestConfig = {
         headers: {
-            'Authorization': localStorage.getItem('authHeader')
+            'Authorization': sessionStorage.getItem('authHeader')
         }
     };
     axios.delete(`${apiUrlEvents}/${eventId}`, config)
