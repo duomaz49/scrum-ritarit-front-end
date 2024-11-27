@@ -36,7 +36,7 @@ const Login = () => {
         try {
             const authenticationHeader = getBasicAuthHeader(username, password);
 
-            const response = await axios.post('http://localhost:8080/api/login', {
+            const response = await axios.post('https://ticket-guru-ticketguru-scrum-ritarit.2.rahtiapp.fi/api/login', {
                 username: username,
                 password: password,
             });

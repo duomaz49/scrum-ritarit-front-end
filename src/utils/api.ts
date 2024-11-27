@@ -2,10 +2,10 @@ import axios, { AxiosRequestConfig } from "axios";
 import {BASE_URL, BASE_URL_LOCALHOST, ENDPOINTS} from './constants';
 import { getBasicAuthHeader } from "./utils";
 
-const apiUrlTickets = `${BASE_URL_LOCALHOST}${ENDPOINTS.TICKETS}`;
-const apiUrlEvents = `${BASE_URL_LOCALHOST}${ENDPOINTS.EVENTS}`;
-const apiUrlSales = `${BASE_URL_LOCALHOST}${ENDPOINTS.SALES}`;
-const apiUrlPaymentMethods = `${BASE_URL_LOCALHOST}${ENDPOINTS.PAYMENT_METHODS}`;
+const apiUrlTickets = `${BASE_URL}${ENDPOINTS.TICKETS}`;
+const apiUrlEvents = `${BASE_URL}${ENDPOINTS.EVENTS}`;
+const apiUrlSales = `${BASE_URL}${ENDPOINTS.SALES}`;
+const apiUrlPaymentMethods = `${BASE_URL}${ENDPOINTS.PAYMENT_METHODS}`;
 
 export const getEvents = (setEvents) => {
     const config: AxiosRequestConfig = {
