@@ -30,7 +30,7 @@ export default function EventsInformation(props: EventsInformationProps) {
     const handleSubmit = () => {
         if (selectedTicketType) {
             const saleData = {
-                userId: Number(localStorage.getItem('userId')),
+                userId: Number(sessionStorage.getItem('userId')),
                 paymentMethodId: selectedPaymentMethod.id,
                 tickets: [
                     {

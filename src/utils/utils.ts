@@ -4,6 +4,6 @@ export const getBasicAuthHeader = (username: string, password: string) => {
 };
 
 export const logoutTicketguru = (navigate) => {
-    localStorage.removeItem('authenticationHeader');
+    sessionStorage.removeItem('authenticationHeader');
     navigate("/login");
 };

@@ -2,7 +2,7 @@ import { Navigate } from 'react-router-dom';
 
 const ProtectedRoute = ({ roles, children }) => {
     // Katso local storageen, jossa kirjautumisessa tallennettu rooli
-    const userRole = localStorage.getItem('role');
+    const userRole = sessionStorage.getItem('role');
 
     // Tarkista onko role protected routessa, jos ei niin navigoi unauth
     if (!roles.includes(userRole)) {

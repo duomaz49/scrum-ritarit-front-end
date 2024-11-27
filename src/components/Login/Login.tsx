@@ -42,12 +42,12 @@ const Login = () => {
             });
 
             if (response.status === 200) {
-                localStorage.setItem('authHeader', authenticationHeader);
+                sessionStorage.setItem('authHeader', authenticationHeader);
                 console.log(response.data);
                 const role = response.data.role;
                 const userId = response.data.userId;
-                localStorage.setItem('role', role);
-                localStorage.setItem('userId', userId);
+                sessionStorage.setItem('role', role);
+                sessionStorage.setItem('userId', userId);
                 if (role === "ADMIN"){
                     navigate("/admin")
                 } else{

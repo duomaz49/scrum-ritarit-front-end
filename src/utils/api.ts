@@ -10,7 +10,7 @@ const apiUrlPaymentMethods = `${BASE_URL_LOCALHOST}${ENDPOINTS.PAYMENT_METHODS}`
 export const getEvents = (setEvents) => {
     const config: AxiosRequestConfig = {
         headers: {
-            'Authorization': localStorage.getItem('authHeader')
+            'Authorization': sessionStorage.getItem('authHeader')
         }
     };
     axios.get(`${apiUrlEvents}`, config)
@@ -26,7 +26,7 @@ export const getEvents = (setEvents) => {
 export const getTicket = (ticketNumber, setTicket, toggleConfirm, toggleUndo) => {
     const config: AxiosRequestConfig = {
         headers: {
-            'Authorization': localStorage.getItem('authHeader')
+            'Authorization': sessionStorage.getItem('authHeader')
         }
     };
     axios.get(`${apiUrlTickets}/${ticketNumber}`, config)
@@ -43,7 +43,7 @@ export const getTicket = (ticketNumber, setTicket, toggleConfirm, toggleUndo) =>
 export const markTicketUsed = (ticketNumber, setUsedModal) => {
     const config: AxiosRequestConfig = {
         headers: {
-            'Authorization': localStorage.getItem('authHeader')
+            'Authorization': sessionStorage.getItem('authHeader')
         }
     };
     axios.put(`${apiUrlTickets}/${ticketNumber}/use`, {}, config)
@@ -58,7 +58,7 @@ export const markTicketUsed = (ticketNumber, setUsedModal) => {
 export const markTicketUnused = (ticketNumber, setUnUsedModal) => {
     const config: AxiosRequestConfig = {
         headers: {
-            'Authorization': localStorage.getItem('authHeader')
+            'Authorization': sessionStorage.getItem('authHeader')
         }
     };
     axios.put(`${apiUrlTickets}/${ticketNumber}/use?used=false`, {}, config)
@@ -73,7 +73,7 @@ export const markTicketUnused = (ticketNumber, setUnUsedModal) => {
 export const sellTicket = (saleData, setSuccesfulSale, setProofOfSaleModal) => {
     const config: AxiosRequestConfig = {
         headers: {
-            'Authorization': localStorage.getItem('authHeader')
+            'Authorization': sessionStorage.getItem('authHeader')
         }
     };
     axios.post(`${apiUrlSales}`, saleData, config)
@@ -92,7 +92,7 @@ export const sellTicket = (saleData, setSuccesfulSale, setProofOfSaleModal) => {
 export const getPaymentMethods = (setPaymentMethods) => {
     const config: AxiosRequestConfig = {
         headers: {
-            'Authorization': localStorage.getItem('authHeader')
+            'Authorization': sessionStorage.getItem('authHeader')
         }
     };
     axios.get(`${apiUrlPaymentMethods}`, config)
