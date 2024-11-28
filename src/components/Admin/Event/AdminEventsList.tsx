@@ -5,6 +5,7 @@ import GenericList from "../../utils/GenericList.tsx";
 import OverlayComponent from "../../utils/Overlay.tsx";
 import CreateOrEditEventForm from "./CreateOrEditEventForm.tsx";
 import DeleteConfirmation from "../../utils/DeleteConfirmation.tsx";
+import SearchBar from "../../utils/SearchBar.tsx";
 
 interface AdminEventsListProps {
     shouldReFetch: boolean;
@@ -16,9 +17,9 @@ export default function AdminEventsList(props: AdminEventsListProps) {
     const [isEventModalOpen, setIsEventModalOpen] = useState<boolean>(false);
     const [isDeleteEventModalOpen, setIsDeleteEventModalOpen] = useState<boolean>(false);
     const [isEventInfoModalOpen, setIsEventInfoModalOpen] = useState<boolean>(false);
-
     const [selectedEvent, setSelectedEvent] = useState<IEvent>(null);
     const [events, setEvents] = useState<IEvent[]>([]);
+    const [query, setQuery] = useState<string>('');
 
     useEffect(() => {
         getEvents(setEvents);
@@ -62,11 +63,21 @@ export default function AdminEventsList(props: AdminEventsListProps) {
 
     };
 
+    const filterEvents = (query: string): IEvent[] => {
+        return events.filter((event) => event.eventName?.toLowerCase().includes(query.toLowerCase()));
+    }
+
     return (
         <>
+            <SearchBar
+                query={query}
+                setQuery={setQuery}
+                width="w-100"
+                placeholder="Search events..."
+            />
             <GenericList<IEvent>
                 isAdmin={true}
-                items={events}
+                items={filterEvents(query)}
                 renderItem={(event) => (
                     <>
                         <div>Event: {event.eventName}</div>

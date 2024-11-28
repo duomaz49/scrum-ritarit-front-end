@@ -2,21 +2,23 @@ import { useState } from 'react';
 import { Input } from 'reactstrap';
 
 interface SearchBarProps {
-    onSearch: (query: string) => void;
+    query: string;
+    setQuery: (query: string) => void
     width?: string;
+    placeholder?: string;
 }
 
 export default function SearchBar(props: SearchBarProps) {
-    const [query, setQuery] = useState<string>('');
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const newQuery = e.target.value;
-        setQuery(newQuery);
-        props.onSearch(newQuery);
+        props.setQuery(newQuery);
     };
 
     return <Input
-        className={props.width} type="search"
-        placeholder="Enter a ticket number..."
-        onChange={handleChange} value={query} />;
+        className={props.width}
+        type="search"
+        placeholder={props.placeholder}
+        onChange={handleChange}
+        value={props.query} />;
 }
