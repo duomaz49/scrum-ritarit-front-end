@@ -25,7 +25,7 @@ export default function TicketCheck() {
     }
 
     const handleScanSuccess = (decodedText: string) => {
-        setScannedText(decodedText);
+        markTicketUsed(decodedText, toggleTicketConfirmModal);
     };
 
     return (
