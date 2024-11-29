@@ -2,7 +2,9 @@ import axios from 'axios';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getBasicAuthHeader } from '../../utils/utils';
-import { Alert, Button, Card, CardBody, Col, Container, Form, FormFeedback, FormGroup, Input, Label, Row } from 'reactstrap';
+import { Alert, Button, Card, CardBody, Col, Container, Form, FormFeedback, FormGroup, Input, InputGroup, InputGroupText, Label, Row } from 'reactstrap';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 
 const Login = () => {
     const [username, setUsername] = useState("");
@@ -10,8 +12,13 @@ const Login = () => {
     const [usernameError, setUsernameError] = useState("");
     const [passwordError, setPasswordError] = useState("");
     const [errorMessage, setErrorMessage] = useState("");
+    const [showPassword, setShowPassword] = useState(false);
 
     const navigate = useNavigate();
+
+    const changePassVisibility = () => {
+        setShowPassword(!showPassword)
+    }
 
     const onButtonClick = async (e: { preventDefault: () => void; }) => {
 
@@ -91,14 +98,21 @@ const Login = () => {
                                 </FormGroup>
                                 <FormGroup>
                                     <Label for="exPassword" className="text-start d-block">Password</Label>
+                                    <InputGroup>
                                     <Input
-                                        type="password"
+                                        type={showPassword ? "text" : "password"}
                                         name="password"
                                         id="exPassword"
                                         invalid={!!passwordError}
                                         value={password}
                                         onChange={(ev) => setPassword(ev.target.value)}
                                     />
+                                    <InputGroupText>
+                                        <Button color='link' onClick={changePassVisibility}>
+                                        <FontAwesomeIcon style={{padding:0, position:"absolute", top:"-2px", right:"10%", color:"black"}} icon={showPassword ? faEyeSlash : faEye} />
+                                        </Button>
+                                    </InputGroupText>
+                                    </InputGroup>
                                     <FormFeedback>{passwordError}</FormFeedback>
                                 </FormGroup>
                                 <Button type="submit" color="success" style={{width:'50%', marginTop:'10px',borderRadius: '25px', background: 'linear-gradient(90deg, #28a745, #218838)', fontWeight: 'bold'}}>
