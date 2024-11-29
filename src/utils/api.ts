@@ -6,6 +6,7 @@ const apiUrlEvents = `${BASE_URL_LOCALHOST}${ENDPOINTS.EVENTS}`;
 const apiUrlSales = `${BASE_URL_LOCALHOST}${ENDPOINTS.SALES}`;
 const apiUrlPaymentMethods = `${BASE_URL_LOCALHOST}${ENDPOINTS.PAYMENT_METHODS}`;
 const apiUrlTicketTypes = `${BASE_URL_LOCALHOST}${ENDPOINTS.TICKET_TYPES}`;
+const apiUrlUsers = `${BASE_URL_LOCALHOST}${ENDPOINTS.USERS}`;
 
 export const getEvents = (setEvents) => {
     const config: AxiosRequestConfig = {
@@ -174,3 +175,28 @@ export const deleteEvent = (eventId, toggleDeleteModal) => {
             alert("Error deleting event, please try again.");
         });
 }
+
+export const createAppUser = (newUser, toggleUserModal) => {
+    const config = {
+        headers: {
+            'Authorization': sessionStorage.getItem('authHeader'),
+        },
+    };
+    const userData = {
+        username: newUser.username,
+        passwordHash: newUser.password,
+        roleId: newUser.roleId,
+    };
+
+    return axios.post(`${apiUrlUsers}`, userData, config)
+        .then((response) => {
+            setTimeout(() => {
+                toggleUserModal();
+            }, 500);
+            alert("New user added successfully")
+            return response.data;
+        })
+        .catch(error => {
+            throw new Error("This username is already taken");
+        });
+};
