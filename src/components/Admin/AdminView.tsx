@@ -1,10 +1,8 @@
-import React, {useState} from "react";
+import {useState} from "react";
 import {Button, Card, CardBody, Container} from "reactstrap";
 import AdminEventsList from "./Event/AdminEventsList.tsx";
 import CreateOrEditEventForm from "./Event/CreateOrEditEventForm.tsx";
 import OverlayComponent from "../utils/Overlay.tsx";
-import { logoutTicketguru } from "../../utils/utils.ts";
-import {useNavigate} from "react-router-dom";
 
 // TODO: Katsotaan joko backissä tai frontissa, että onko sisäänkirjautunut käyttäjän id
 //  sama kuin tapahtumaan merkitty userId jotta saadaan näytettyä oikeat tapahtumat
@@ -13,7 +11,6 @@ import {useNavigate} from "react-router-dom";
 export default function AdminView() {
     const [isCreateEventModalOpen, setIsCreateEventModalOpen] = useState<boolean>(false);
     const [shouldReFetch, setShouldReFetch] = useState<boolean>(false);
-    const navigate = useNavigate();
 
     const toggleCreateEventModal = () => {
         setShouldReFetch(true);
@@ -29,7 +26,6 @@ export default function AdminView() {
                     <Button color="success" block onClick={() => setIsCreateEventModalOpen(!isCreateEventModalOpen)}>
                         Create New Event
                     </Button>
-                    <Button color="danger" block className="mb-2" onClick={() => logoutTicketguru(navigate)}>Log Out</Button>
                     <hr className="my-4"/>
                     <AdminEventsList shouldReFetch={shouldReFetch} setShouldReFetch={setShouldReFetch}/>
                 </CardBody>

@@ -7,6 +7,7 @@ import NotFound from "./components/utils/RouteError.tsx";
 import LoginView from './components/Login/Login.tsx';
 import ProtectedRoute from './components/Login/ProtectedRoute.tsx';
 import AuthError from './components/utils/AuthError.tsx';
+import Layout from './components/utils/Layout.tsx';
 
 // Define routes using createBrowserRouter
 const routes = createBrowserRouter([
@@ -19,36 +20,42 @@ const routes = createBrowserRouter([
         element: <LoginView />,
     },
     {
-        path: '/user',
-        element: (
-            <ProtectedRoute roles={['ADMIN','USER']}>
-                 <SalesPersonView />
-            </ProtectedRoute>
-        ),
-    },
-    {
-        path: '/check',
-        element: (
-            <ProtectedRoute roles={['ADMIN','USER']}>
-                 <TicketCheck />
-            </ProtectedRoute>
-        ),
-    },
-    {
-        path: '/sales',
-        element: (
-            <ProtectedRoute roles={['ADMIN','USER']}>
-                 <TicketSale />
-            </ProtectedRoute>
-        ),
-    },
-    {
-        path: '/admin',
-        element: (
-            <ProtectedRoute roles={['ADMIN']}>
-                <AdminView />
-            </ProtectedRoute>
-        ),
+        path: '/',
+        element: <Layout />,
+        children: [
+            {
+                path: '/user',
+                element: (
+                    <ProtectedRoute roles={['ADMIN', 'USER']}>
+                        <SalesPersonView />
+                    </ProtectedRoute>
+                ),
+            },
+            {
+                path: '/check',
+                element: (
+                    <ProtectedRoute roles={['ADMIN', 'USER']}>
+                        <TicketCheck />
+                    </ProtectedRoute>
+                ),
+            },
+            {
+                path: '/sales',
+                element: (
+                    <ProtectedRoute roles={['ADMIN', 'USER']}>
+                        <TicketSale />
+                    </ProtectedRoute>
+                ),
+            },
+            {
+                path: '/admin',
+                element: (
+                    <ProtectedRoute roles={['ADMIN']}>
+                        <AdminView />
+                    </ProtectedRoute>
+                ),
+            },
+        ],
     },
     {
         path: '*',
