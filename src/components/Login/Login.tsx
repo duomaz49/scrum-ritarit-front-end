@@ -43,7 +43,7 @@ const Login = () => {
         try {
             const authenticationHeader = getBasicAuthHeader(username, password);
 
-            const response = await axios.post('http://localhost:8080/api/login', {
+            const response = await axios.post('https://ticket-guru-ticketguru-scrum-ritarit.2.rahtiapp.fi/api/login', {
                 username: username,
                 password: password,
             });
@@ -72,7 +72,7 @@ const Login = () => {
             <Row className="justify-content-center align-items-center">
                 <Col md={7} style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
                     <img
-                        src="src/assets/pexels-tdcat-69866.jpg"
+                        src="/pexels-tdcat-69866.jpg"
                         alt="Ticketguru login photo"
                         style={{ maxWidth: "100%", height: "auto", borderRadius: "10px" }}
                     />
