@@ -25,7 +25,7 @@ export default function TicketCheck() {
     }
 
     const handleScanSuccess = (decodedText: string) => {
-        setScannedText(decodedText);
+        markTicketUsed(decodedText, toggleTicketConfirmModal);
     };
 
     return (
@@ -48,8 +48,9 @@ export default function TicketCheck() {
                                     className="text-center d-flex flex-column align-items-center justify-content-center">
                                     <h3 className="mt-4 mb-4">Enter a ticket number:</h3>
                                     <SearchBar
+                                        query={searchQuery}
+                                        setQuery={setSearchQuery}
                                         width={"w-50"}
-                                        onSearch={setSearchQuery}
                                     />
                                     <Button
                                         onClick={() => getTicket(searchQuery, setTicket, toggleTicketConfirmModal, toggleTicketUndoModal)}
