@@ -90,6 +90,7 @@ export default function CreateOrEditEventForm(props: CreateOrEditEventFormProps)
                     type="date"
                     id="date"
                     value={event.eventDate}
+                    min={moment().add(1,'days').format("YYYY-MM-DD")}
                     placeholder='Event date'
                     required
                     onChange={(e) => setEvent({...event, eventDate: e.target.value})}

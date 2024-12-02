@@ -24,8 +24,8 @@ export default function TicketCheck() {
         setIsTicketUndoModalOpen(!isTicketUndoModalOpen);
     }
 
-    const handleScanSuccess = (decodedText: string) => {
-        markTicketUsed(decodedText, toggleTicketConfirmModal);
+    const handleScanSuccess = (ticketNumber: string) => {
+        getTicket(ticketNumber, setTicket, toggleTicketConfirmModal, toggleTicketUndoModal)
     };
 
     return (

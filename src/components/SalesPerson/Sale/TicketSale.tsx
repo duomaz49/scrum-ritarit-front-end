@@ -8,6 +8,8 @@ import {getEvents, sellTicket} from "../../../utils/api.ts";
 import ProofOfSale from "./ProofOfSale.tsx";
 import {ISale} from "../../../types/sale.ts";
 import {useNavigate} from "react-router-dom";
+import SearchBar from "../../utils/SearchBar.tsx";
+import moment from "moment/moment";
 
 // TODO: Katsotaan joko backissä tai frontissa, että onko sisäänkirjautunut käyttäjän id
 //  sama kuin tapahtumaan merkitty userId Myös saleen tartee userId:tä
@@ -21,6 +23,7 @@ export default function TicketSale() {
     const [succesfulSale, setSuccesfulSale] = useState<ISale>(null);
     const [events, setEvents] = useState<IEvent[]>([]);
     const [shouldReFetch, setShouldReFetch] = useState<boolean>(false);
+    const [query, setQuery] = useState<string>('');
 
     useEffect(() => {
         getEvents(setEvents);
@@ -42,12 +45,22 @@ export default function TicketSale() {
         setShouldReFetch(true);
     }
 
+    const filterEvents = (query: string): IEvent[] => {
+        return events.filter((event) => event.eventName?.toLowerCase().includes(query.toLowerCase()));
+    }
+
     return (
         <Container className="d-flex justify-content-center">
             {events && events.length > 0 && <Card className='w-50 m-3 p-4'>
                 <CardBody className='text-start'>
                     <h2 className="text-center">Sell Tickets here!</h2>
-                    <SalesPersonEventList events={events} handleEventClick={handleEventClick}/>
+                    <SearchBar
+                        query={query}
+                        setQuery={setQuery}
+                        width="w-100"
+                        placeholder="Search events..."
+                    />
+                    <SalesPersonEventList events={filterEvents(query)} handleEventClick={handleEventClick}/>
                     <hr className="my-4"/>
                     <Button color="warning" block className="mb-2" onClick={() => navigate('/user')}>Go back</Button>
                 </CardBody>

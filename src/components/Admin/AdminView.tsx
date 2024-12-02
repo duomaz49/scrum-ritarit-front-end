@@ -27,7 +27,7 @@ export default function AdminView() {
         <Container className="d-flex justify-content-center mt-4">
             <Card className='w-50 m-3 p-4'>
                 <CardBody className='text-start'>
-                    <h1 className="text-center">Admin View</h1>
+                    <h1 className="text-center">Admin</h1>
                     <hr className="my-4"/>
                     <Button color="success" block onClick={() => setIsCreateEventModalOpen(!isCreateEventModalOpen)}>
                         Create New Event

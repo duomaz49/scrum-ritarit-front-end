@@ -8,7 +8,7 @@ interface GenericListProps<T> {
     renderItem: (item: T) => string | React.ReactNode;
     onItemClick: (item: T, action: 'edit' | 'delete' | 'info' | 'click') => void;
     buttonColor: string;
-    title: string;
+    title?: string;
     disableCondition?: (item: T) => boolean;
     buttonClassName?: string;
     listAsRowClassName?: string;
