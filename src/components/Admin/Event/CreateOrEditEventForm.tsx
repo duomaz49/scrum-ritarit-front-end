@@ -109,32 +109,6 @@ export default function CreateOrEditEventForm(props: CreateOrEditEventFormProps)
                     onChange={(e) => setEvent({...event, location: e.target.value})}
                 />
             </FormGroup>
-            <FormGroup className="mb-1 px-2 text-start">
-                <Label for="totalTickets" className="form-label p-1">
-                    Total Tickets
-                </Label>
-                <Input
-                    type="number"
-                    id="totalTickets"
-                    value={event.totalTickets}
-                    placeholder='Total tickets'
-                    required
-                    onChange={(e) => setEvent({...event, totalTickets: parseInt(e.target.value)})}
-                />
-            </FormGroup>
-            <FormGroup className="mb-1 px-2 text-start">
-                <Label for="availableTickets" className="form-label p-1">
-                    Available Tickets
-                </Label>
-                <Input
-                    type="number"
-                    id="availableTickets"
-                    value={event.availableTickets}
-                    placeholder='Available tickets'
-                    required
-                    onChange={(e) => setEvent({...event, availableTickets: parseInt(e.target.value)})}
-                />
-            </FormGroup>
             <EventTicketTypeAccordion
                 create={!props.eventToEdit}
                 ticketTypes={ticketTypes}
