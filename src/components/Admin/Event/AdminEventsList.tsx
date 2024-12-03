@@ -1,11 +1,12 @@
 import React, {useEffect, useState} from 'react'
 import {IEvent} from "../../../types/event.ts";
-import {deleteEvent, getEvents} from "../../../utils/api.ts";
+import {deleteEvent, getEvents, getEventSummary} from "../../../utils/api.ts";
 import GenericList from "../../utils/GenericList.tsx";
 import OverlayComponent from "../../utils/Overlay.tsx";
 import CreateOrEditEventForm from "./CreateOrEditEventForm.tsx";
 import DeleteConfirmation from "../../utils/DeleteConfirmation.tsx";
 import SearchBar from "../../utils/SearchBar.tsx";
+import EventStatistics from './EventStatistics.tsx';
 
 interface AdminEventsListProps {
     shouldReFetch: boolean;
@@ -18,6 +19,7 @@ export default function AdminEventsList(props: AdminEventsListProps) {
     const [isDeleteEventModalOpen, setIsDeleteEventModalOpen] = useState<boolean>(false);
     const [isEventInfoModalOpen, setIsEventInfoModalOpen] = useState<boolean>(false);
     const [selectedEvent, setSelectedEvent] = useState<IEvent>(null);
+    const [selectedEventSummary, setSelectedEventSummary] = useState(null);
     const [events, setEvents] = useState<IEvent[]>([]);
     const [query, setQuery] = useState<string>('');
 
@@ -42,11 +44,16 @@ export default function AdminEventsList(props: AdminEventsListProps) {
         setIsEventModalOpen(!isEventModalOpen);
     }
 
+    const toggleEventInfoModal = () => {
+        setShouldReFetch(true);
+        setIsEventInfoModalOpen(!isEventInfoModalOpen)
+    }
+
     const triggerDeleteEvent = () => {
         deleteEvent(selectedEvent.eventId, toggleDeleteEventModal)
     }
 
-    const handleEventClick = (event: IEvent, action: 'edit' | 'delete' | 'view') => {
+    const handleEventClick = (event: IEvent, action: 'edit' | 'delete' | 'info') => {
         if (action === 'edit') {
             setSelectedEvent(event);
             setIsEventModalOpen(true);
@@ -58,7 +65,10 @@ export default function AdminEventsList(props: AdminEventsListProps) {
 
         if (action === 'info') {
             setSelectedEvent(event);
-            setIsEventInfoModalOpen(true);
+            getEventSummary(event.eventId, (data) => {
+                setSelectedEventSummary(data)
+                setIsEventInfoModalOpen(true)
+            })
         }
 
     };
@@ -114,6 +124,14 @@ export default function AdminEventsList(props: AdminEventsListProps) {
                     cancelText="No"
                     onConfirm={triggerDeleteEvent}
                     onCancel={toggleDeleteEventModal}/>
+            </OverlayComponent>
+            <OverlayComponent
+                isOpen={isEventInfoModalOpen}
+                toggle={toggleEventInfoModal}
+                title="Event summary"
+                >
+                
+                <EventStatistics event={selectedEvent} summary={selectedEventSummary}></EventStatistics>
             </OverlayComponent>
         </>
 

@@ -158,6 +158,23 @@ export const editEvent = (eventData, toggleEventModal) => {
         });
 }
 
+export const getEventSummary = (eventId, callback) => {
+    const config: AxiosRequestConfig = {
+        headers: {
+            'Authorization': sessionStorage.getItem('authHeader')
+        }
+    };
+    axios.get(`${apiUrlEvents}/${eventId}${ENDPOINTS.SUMMARIES}`, config)
+        .then((response) => {
+            console.log("Event summary:", response.data);
+            callback(response.data)
+        })
+        .catch((error) => {
+            console.error("Error fetching event summary:", error);
+            alert("No data found. Please contact the administrator.");
+        });
+}
+
 export const deleteEvent = (eventId, toggleDeleteModal) => {
     const config: AxiosRequestConfig = {
         headers: {

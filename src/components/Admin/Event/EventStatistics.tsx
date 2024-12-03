@@ -1,40 +1,63 @@
-import React from "react";
-import { Card, CardBody, Col, Container, Row } from "reactstrap";
+import { Container, Table } from "reactstrap";
 import {IEvent} from "../../../types/event.ts";
+import SalesBarChart from "./SalesBarChart.tsx";
+import { formatDate } from "../../../utils/date.ts";
+import TicketTypesPieChart from "./TicketTypesPieChart.tsx";
 
 interface EventStatisticsProps {
     event: IEvent;
+    summary: any;
 }
 
-// TODO: Endpoint jolla hakea kaikki eventiin liitetyt ostotapahumat, monta myyty, saatavilla, totaali summa myytyjen lippujen hinnasta
-// TODO: Lisäksi kaikki lipputyypit ja niiden myydyt määrät
-export default function EventStatistics(props: EventStatisticsProps) {
-    return (
-        <Container className="d-flex align-items-center justify-content-center">
-            <Card className="w-100 card-no-border p-2">
-                <CardBody className="text-center d-flex flex-column align-items-center justify-content-center">
-                    <h4 className="text-center mb-3">Event statistics</h4>
+// Täällä haetaam apin kautta summary ja tarvittavat tiedot lähetetään komponenteille käytettäviksi
+export default function EventStatistics({event, summary}: EventStatisticsProps) {
 
-                    <Row className="w-100">
-                        <Col xs="12" sm="6" md="6" lg="6" xl="6" className="mb-4 d-flex justify-content-center">
-                            <Card className="w-100 card-no-border p-2">
-                                <CardBody
-                                    className="text-center d-flex flex-column align-items-center justify-content-center">
-                                    <div>LOL</div>
-                                </CardBody>
-                            </Card>
-                        </Col>
-                        <Col xs="12" sm="6" md="6" lg="6" xl="6" className="mb-4 d-flex justify-content-center">
-                            <Card className="w-100 card-no-border p-2">
-                                <CardBody
-                                    className="text-center d-flex flex-column align-items-center justify-content-center">
-                                    <div>LOL</div>
-                                </CardBody>
-                            </Card>
-                        </Col>
-                    </Row>
-                </CardBody>
-            </Card>
+    const totalRevenue = summary.reduce((sum, item) => sum + item.totalRevenue, 0);
+    const ticketTypeNames = summary.map(item => item.ticketTypeName);
+    const ticketTypesSold = summary.map(item => item.ticketsSold);
+    
+    return (
+        <Container>
+            <div className="text-center">
+                <h2>{event.eventName}</h2>
+                <p>{formatDate(event.eventDate)}</p>
+            </div>
+            <Table striped>
+                <thead>
+                    <tr>
+                        <th className="text-center">
+                            Total amount
+                        </th>
+                        <th className="text-center">
+                            Tickets Sold
+                        </th>
+                        <th className="text-center">
+                            Tickets Unsold
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th className="text-center">
+                            {event.totalTickets}
+                        </th>
+                        <th className="text-center">
+                            {event.totalTickets-event.availableTickets}
+                        </th>
+                        <th className="text-center">
+                            {event.availableTickets}
+                        </th>
+                    </tr>
+                </tbody>
+            </Table>
+            <SalesBarChart totalTickets={event.totalTickets} availableTickets={event.availableTickets}/>
+            <h3 className="text-center" style={{marginTop:'20px', marginBottom:'20px'}}>Total revenue made: {totalRevenue.toFixed(2)}$</h3>
+            <p className="text-center">Ticket type split:</p>
+            <div style={{display:'flex', justifyContent:'center'}}>
+                <div style={{width:'80%', height:'80%'}}>
+                    <TicketTypesPieChart ticketTypeNames={ticketTypeNames} ticketTypesSold={ticketTypesSold}/>
+                </div>
+            </div>
         </Container>
     );
 }

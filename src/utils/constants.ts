@@ -10,4 +10,5 @@ export const ENDPOINTS = {
     LOGIN: '/login',
     PAYMENT_METHODS: '/paymentmethods',
     TICKET_TYPES: '/ticket-types',
+    SUMMARIES: '/report',
 };
