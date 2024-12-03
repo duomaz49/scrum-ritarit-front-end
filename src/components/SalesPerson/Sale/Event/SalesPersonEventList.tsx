@@ -1,6 +1,6 @@
-import {IEvent} from "../../../../types/event.ts";
+import { IEvent } from "../../../../types/event.ts";
 import GenericList from "../../../utils/GenericList.tsx";
-import {formatDate} from "../../../../utils/date.ts";
+import { formatDate } from "../../../../utils/date.ts";
 
 interface EventsCarouselProps {
     events: IEvent[];
@@ -9,7 +9,7 @@ interface EventsCarouselProps {
 
 export default function SalesPersonEventList(props: EventsCarouselProps) {
     // tulevat tapahtumat Salespersoneille
-        const futureEvents = props.events.filter(event => {
+    const futureEvents = props.events.filter(event => {
         const eventDate = new Date(event.eventDate!);
         return eventDate > new Date();
     });
@@ -19,10 +19,21 @@ export default function SalesPersonEventList(props: EventsCarouselProps) {
             items={futureEvents}
             renderItem={(event) => (
                 <>
-                    <div>Event: {event.eventName}</div>
-                    <div>Available Tickets: {event.availableTickets}</div>
-                    <div>Date: {formatDate(event.eventDate)}</div>
-                    <div>Location: {event.location}</div>
+                    <div><b>Event:</b> {event.eventName}</div>
+                    <div><b>Date: </b>{formatDate(event.eventDate)}</div>
+                    <div><b>Location: </b>{event.location}</div>
+                    {event.eventTicketTypes?.length ? (
+                        <>
+                            <div><b>Available tickets:</b></div>
+                            {event.eventTicketTypes.map((ticketType) => (
+                                <div key={ticketType.eventTicketTypeId}>
+                                    {ticketType.ticketTypeName}: {ticketType.price} €, {ticketType.ticketQuantity} tickets left
+                                </div>
+                            ))}
+                        </>
+                    ) : (
+                        <div>No ticket types available.</div>
+                    )}
                 </>
             )}
             onItemClick={props.handleEventClick}
