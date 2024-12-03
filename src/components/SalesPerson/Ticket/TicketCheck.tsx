@@ -24,8 +24,10 @@ export default function TicketCheck() {
         setIsTicketUndoModalOpen(!isTicketUndoModalOpen);
     }
 
-    const handleScanSuccess = (ticketNumber: string) => {
-        getTicket(ticketNumber, setTicket, toggleTicketConfirmModal, toggleTicketUndoModal)
+    const handleScanSuccess = (decodedText: string) => {
+        const trimmedScan = decodedText.trim();
+        setSearchQuery(trimmedScan)
+        getTicket(trimmedScan, setTicket, toggleTicketConfirmModal, toggleTicketUndoModal)
     };
 
     return (
@@ -38,7 +40,7 @@ export default function TicketCheck() {
                             <Card className="w-100 card-no-border p-2">
                                 <CardBody
                                     className="text-center d-flex flex-column align-items-center justify-content-center">
-                                    <QrReader onScanSuccess={handleScanSuccess}/>
+                                    <QrReader key={searchQuery} onScanSuccess={handleScanSuccess}/>
                                 </CardBody>
                             </Card>
                         </Col>

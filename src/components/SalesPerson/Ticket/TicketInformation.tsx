@@ -19,7 +19,7 @@ export default function TicketInformation(props: TicketInformationProps) {
                     <div>Price: {props.ticket.price}</div>
                     <div>Event: {props.ticket.eventName}</div>
                     <div>Type: {props.ticket.ticketTypeName}</div>
-                    <div>Used: {props.ticket.used ? 'Used' : 'Unused'}</div>
+                    <div>Used: <strong>{props.ticket.used ? 'Used' : 'Unused'}</strong></div>
                 </CardBody>
             </Card>
         </Container>
