@@ -8,9 +8,15 @@ interface EventsCarouselProps {
 }
 
 export default function SalesPersonEventList(props: EventsCarouselProps) {
+    // tulevat tapahtumat Salespersoneille
+        const futureEvents = props.events.filter(event => {
+        const eventDate = new Date(event.eventDate!);
+        return eventDate > new Date();
+    });
+
     return (
         <GenericList<IEvent>
-            items={props.events}
+            items={futureEvents}
             renderItem={(event) => (
                 <>
                     <div>Event: {event.eventName}</div>
