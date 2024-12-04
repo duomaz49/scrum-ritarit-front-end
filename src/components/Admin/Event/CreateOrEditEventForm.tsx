@@ -19,8 +19,6 @@ export default function CreateOrEditEventForm(props: CreateOrEditEventFormProps)
         eventName: "",
         eventDate: moment().add(1,'days').format("YYYY-MM-DD"),
         location: "",
-        totalTickets: 0,
-        availableTickets: 0,
         ...props.eventToEdit,
     });
 
